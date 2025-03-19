@@ -8,6 +8,12 @@
 import Foundation
 
 enum Resources {
+    enum Font: String {
+        case bold = "Pretendard-Bold"
+        case medium = "Pretendard-Medium"
+        case regular = "Pretendard-Regular"
+    }
+    
     enum SystemImage: String {
         case back = "arrow.left"
         case search = "magnifyingglass"

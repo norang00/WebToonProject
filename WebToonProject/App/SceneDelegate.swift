@@ -53,8 +53,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let likeVC = UINavigationController(rootViewController: LikeViewController())
 
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.tintColor = .black
         tabBarController.setViewControllers([recommendVC, searchVC, likeVC], animated: true)
-        tabBarController.tabBar.tintColor = .accent
         tabBarController.tabBar.items![0].title = Resources.Keys.TabTitle.tab_0.rawValue.localized
         tabBarController.tabBar.items![0].image = UIImage(systemName: Resources.SystemImage.recommend.rawValue)
         tabBarController.tabBar.items![1].title = Resources.Keys.TabTitle.tab_1.rawValue.localized

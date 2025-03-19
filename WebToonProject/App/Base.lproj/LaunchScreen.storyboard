@@ -24,10 +24,18 @@
                                     <constraint firstAttribute="width" constant="240" id="bcx-Zk-Vds"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="홍규희" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Fn-Yw-nUp">
+                                <rect key="frame" x="165" y="499" width="63" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="AccentColor"/>
                         <constraints>
+                            <constraint firstItem="7Fn-Yw-nUp" firstAttribute="top" secondItem="jaY-eE-x2v" secondAttribute="bottom" constant="80" id="4wd-fs-Pal"/>
+                            <constraint firstItem="7Fn-Yw-nUp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="DXb-2o-HlR"/>
                             <constraint firstItem="jaY-eE-x2v" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="120" id="QAL-bO-9aU"/>
                             <constraint firstItem="jaY-eE-x2v" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="cDt-UE-de2"/>
                         </constraints>
@@ -41,7 +49,7 @@
     <resources>
         <image name="TitleImage" width="341.33334350585938" height="341.33334350585938"/>
         <namedColor name="AccentColor">
-            <color red="0.0" green="0.86274509803921573" blue="0.396078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.86299997568130493" blue="0.39599999785423279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
