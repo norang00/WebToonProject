@@ -12,6 +12,9 @@ import RxCocoa
 final class RecommendViewController: BaseViewController {
 
     private let recommendView = RecommendView()
+    private let recommendViewModel = RecommendViewModel()
+    
+    private let disposeBag = DisposeBag()
     
     override func loadView() {
         view = recommendView
@@ -29,10 +32,33 @@ final class RecommendViewController: BaseViewController {
         ]
         recommendView.bannerView.setImages(images)
         
-        self.navigationController?.navigationItem.title = Resources.Keys.TabTitle.tab_0.rawValue.localized
-
+        self.navigationItem.title = Resources.Keys.Title.recommend.rawValue.localized
         
+        recommendView.collectionView.register(UINib(nibName: "BasicCollectionViewCell", bundle: nil),
+                                              forCellWithReuseIdentifier: BasicCollectionViewCell.identifier)
         
+        bind()
+    }
+    
+    private func bind() {
+        
+        let input = RecommendViewModel.Input()
+        let output = recommendViewModel.transform(input)
+        
+        output.resultList
+            .do { resultList in
+                if resultList.isEmpty {
+                    self.showAlert(title: "alert title",
+                                   message: "alert message")
+                }
+            }
+            .drive(recommendView.collectionView.rx.items(
+                cellIdentifier: BasicCollectionViewCell.identifier,
+                cellType: BasicCollectionViewCell.self)) { index, item, cell in
+                        cell.configureData(item)
+                    
+                }
+                .disposed(by: disposeBag)
     }
 
 }

@@ -14,8 +14,8 @@ final class RecommendView: BaseView {
     private let contentView = UIView()
     
     let bannerView = BannerView()
-    private let sectionHeaderView = SectionHeaderView()
     private let dailyButton = UIButton()
+    private let sectionHeaderView = SectionHeaderView()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     
     override func configureHierarchy() {
@@ -41,7 +41,7 @@ final class RecommendView: BaseView {
         bannerView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(280)
+            make.height.equalTo(240)
         }
         
         dailyButton.snp.makeConstraints { make in
@@ -53,13 +53,13 @@ final class RecommendView: BaseView {
         sectionHeaderView.snp.makeConstraints { make in
             make.top.equalTo(dailyButton.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(44)
+            make.height.equalTo(50)
         }
         
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(sectionHeaderView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(400)
+            make.height.greaterThanOrEqualTo(400)
             make.bottom.equalTo(contentView.snp.bottom)
         }
     }
@@ -69,10 +69,19 @@ final class RecommendView: BaseView {
         
         dailyButton.setTitle("요일별 웹툰", for: .normal)
         dailyButton.backgroundColor = .accent
+        
+        collectionView.isScrollEnabled = false
     }
     
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
+
+        let screenWidth = UIScreen.main.bounds.width
+        let totalSpacing = layout.minimumInteritemSpacing * 4
+        let itemWidth = (screenWidth - totalSpacing) / 3
+        let itemHeight = itemWidth * 1.8
+        layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+        layout.sectionInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
         return layout

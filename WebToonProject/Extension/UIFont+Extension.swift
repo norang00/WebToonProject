@@ -8,10 +8,8 @@
 import UIKit
 
 extension UIFont {
-    /// 지정된 폰트 이름을 사용해 커스텀 폰트를 반환합니다.
-    /// 폰트가 없으면 시스템 폰트를 fallback합니다.
     static func customFont(ofSize size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont {
-        let fontName = "YourCustomFontName"  // 프로젝트에 추가한 커스텀 폰트 이름으로 변경하세요.
+        let fontName = "YourCustomFontName"  // 프로젝트에 추가한 커스텀 폰트 이름으로 변경
         return UIFont(name: fontName, size: size) ?? UIFont.systemFont(ofSize: size, weight: weight)
     }
     
