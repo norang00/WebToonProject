@@ -8,21 +8,51 @@
 import UIKit
 
 extension UIFont {
-    static func customFont(ofSize size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont {
-        let fontName = "YourCustomFontName"  // 프로젝트에 추가한 커스텀 폰트 이름으로 변경
-        return UIFont(name: fontName, size: size) ?? UIFont.systemFont(ofSize: size, weight: weight)
+    static func pretendardRegular(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: "Pretendard-Regular", size: size) ?? UIFont.systemFont(ofSize: size, weight: .regular)
     }
     
-    // 미리 정의해둔 스타일 예시
+    static func pretendardMedium(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: "Pretendard-Medium", size: size) ?? UIFont.systemFont(ofSize: size, weight: .medium)
+    }
+    
+    static func pretendardBold(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: "Pretendard-Bold", size: size) ?? UIFont.systemFont(ofSize: size, weight: .bold)
+    }
+    
+    static func pretendardJPRegular(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: "PretendardJP-Regular", size: size) ?? UIFont.systemFont(ofSize: size, weight: .regular)
+    }
+    
+    static func pretendardJPMedium(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: "PretendardJP-Medium", size: size) ?? UIFont.systemFont(ofSize: size, weight: .medium)
+    }
+    
+    static func pretendardJPBold(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: "PretendardJP-Bold", size: size) ?? UIFont.systemFont(ofSize: size, weight: .bold)
+    }
+    
     static var titleFont: UIFont {
-        return UIFont.customFont(ofSize: 20, weight: .bold)
+        return UIFont.pretendardBold(ofSize: 20)
     }
     
     static var bodyFont: UIFont {
-        return UIFont.customFont(ofSize: 16)
+        return UIFont.pretendardRegular(ofSize: 16)
     }
     
     static var captionFont: UIFont {
-        return UIFont.customFont(ofSize: 12)
+        return UIFont.pretendardMedium(ofSize: 12)
+    }
+    
+    static var jpTitleFont: UIFont {
+        return UIFont.pretendardJPBold(ofSize: 20)
+    }
+    
+    static var jpBodyFont: UIFont {
+        return UIFont.pretendardJPRegular(ofSize: 16)
+    }
+    
+    static var jpCaptionFont: UIFont {
+        return UIFont.pretendardJPMedium(ofSize: 12)
     }
 }
