@@ -11,12 +11,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let scene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: scene)
+        window?.rootViewController = SceneDelegate.getMainTabBarController()
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -47,6 +46,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    // MARK: - TabBarController
+    static func getMainTabBarController() -> UITabBarController {
+        let recommendVC = UINavigationController(rootViewController: RecommendViewController())
+        let searchVC = UINavigationController(rootViewController: SearchViewController())
+        let likeVC = UINavigationController(rootViewController: LikeViewController())
 
+        let tabBarController = UITabBarController()
+        tabBarController.setViewControllers([recommendVC, searchVC, likeVC], animated: true)
+        tabBarController.tabBar.tintColor = .accent
+        tabBarController.tabBar.items![0].title = "추천"
+        tabBarController.tabBar.items![0].image = UIImage(systemName: "star")
+        tabBarController.tabBar.items![1].title = "검색"
+        tabBarController.tabBar.items![1].image = UIImage(systemName: "star")
+        tabBarController.tabBar.items![2].title = "좋아요"
+        tabBarController.tabBar.items![2].image = UIImage(systemName: "star")
+        return tabBarController
+    }
 }
 

@@ -6,8 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EEEDAB402D8AB40B00FFDF94 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = EEEDAB3F2D8AB40B00FFDF94 /* .gitignore */; };
+		EEEDAB5A2D8AB80900FFDF94 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EEEDAB592D8AB80900FFDF94 /* SnapKit */; };
+		EEEDAB5D2D8AB81900FFDF94 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = EEEDAB5C2D8AB81900FFDF94 /* Alamofire */; };
+		EEEDAB602D8AB85500FFDF94 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = EEEDAB5F2D8AB85500FFDF94 /* Toast */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EEEDAAC22D8AAAB000FFDF94 /* WebToonProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebToonProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEEDAB3F2D8AB40B00FFDF94 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +44,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEEDAB602D8AB85500FFDF94 /* Toast in Frameworks */,
+				EEEDAB5A2D8AB80900FFDF94 /* SnapKit in Frameworks */,
+				EEEDAB5D2D8AB81900FFDF94 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +56,7 @@
 		EEEDAAB92D8AAAB000FFDF94 = {
 			isa = PBXGroup;
 			children = (
+				EEEDAB3F2D8AB40B00FFDF94 /* .gitignore */,
 				EEEDAAC42D8AAAB000FFDF94 /* WebToonProject */,
 				EEEDAAC32D8AAAB000FFDF94 /* Products */,
 			);
@@ -78,6 +90,9 @@
 			);
 			name = WebToonProject;
 			packageProductDependencies = (
+				EEEDAB592D8AB80900FFDF94 /* SnapKit */,
+				EEEDAB5C2D8AB81900FFDF94 /* Alamofire */,
+				EEEDAB5F2D8AB85500FFDF94 /* Toast */,
 			);
 			productName = WebToonProject;
 			productReference = EEEDAAC22D8AAAB000FFDF94 /* WebToonProject.app */;
@@ -107,6 +122,11 @@
 			);
 			mainGroup = EEEDAAB92D8AAAB000FFDF94;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EEEDAB582D8AB80900FFDF94 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				EEEDAB5B2D8AB81900FFDF94 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				EEEDAB5E2D8AB85500FFDF94 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EEEDAAC32D8AAAB000FFDF94 /* Products */;
 			projectDirPath = "";
@@ -122,6 +142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEEDAB402D8AB40B00FFDF94 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,9 +170,8 @@
 				INFOPLIST_FILE = WebToonProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -159,6 +179,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.norang.WebToonProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -176,9 +200,8 @@
 				INFOPLIST_FILE = WebToonProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -186,6 +209,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.norang.WebToonProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -333,6 +360,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EEEDAB582D8AB80900FFDF94 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		EEEDAB5B2D8AB81900FFDF94 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		EEEDAB5E2D8AB85500FFDF94 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EEEDAB592D8AB80900FFDF94 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EEEDAB582D8AB80900FFDF94 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		EEEDAB5C2D8AB81900FFDF94 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EEEDAB5B2D8AB81900FFDF94 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		EEEDAB5F2D8AB85500FFDF94 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EEEDAB5E2D8AB85500FFDF94 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EEEDAABA2D8AAAB000FFDF94 /* Project object */;
 }
