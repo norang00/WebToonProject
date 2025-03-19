@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = SceneDelegate.getMainTabBarController()
+        window?.rootViewController = SceneDelegate.createMainTabBarController()
         window?.makeKeyAndVisible()
     }
 
@@ -47,7 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     // MARK: - TabBarController
-    static func getMainTabBarController() -> UITabBarController {
+    static func createMainTabBarController() -> UITabBarController {
         let recommendVC = UINavigationController(rootViewController: RecommendViewController())
         let searchVC = UINavigationController(rootViewController: SearchViewController())
         let likeVC = UINavigationController(rootViewController: LikeViewController())
@@ -55,13 +55,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers([recommendVC, searchVC, likeVC], animated: true)
         tabBarController.tabBar.tintColor = .accent
-        tabBarController.tabBar.items![0].title = "추천"
-        tabBarController.tabBar.items![0].image = UIImage(systemName: "star")
-        tabBarController.tabBar.items![1].title = "검색"
-        tabBarController.tabBar.items![1].image = UIImage(systemName: "star")
-        tabBarController.tabBar.items![2].title = "좋아요"
-        tabBarController.tabBar.items![2].image = UIImage(systemName: "star")
+        tabBarController.tabBar.items![0].title = Resources.Keys.TabTitle.tab_0.rawValue.localized
+        tabBarController.tabBar.items![0].image = UIImage(systemName: Resources.SystemImage.recommend.rawValue)
+        tabBarController.tabBar.items![1].title = Resources.Keys.TabTitle.tab_1.rawValue.localized
+        tabBarController.tabBar.items![1].image = UIImage(systemName: Resources.SystemImage.search.rawValue)
+        tabBarController.tabBar.items![2].title = Resources.Keys.TabTitle.tab_2.rawValue.localized
+        tabBarController.tabBar.items![2].image = UIImage(systemName: Resources.SystemImage.like.rawValue)
         return tabBarController
     }
 }
-
