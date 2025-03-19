@@ -24,10 +24,10 @@ enum Resources {
     }
     
     enum Keys {
-        enum TabTitle: String {
-            case tab_0 = "tab_0"
-            case tab_1 = "tab_1"
-            case tab_2 = "tab_2"
+        enum Title: String {
+            case recommend = "recommend"
+            case search = "search"
+            case like = "like"
         }
     }
 }

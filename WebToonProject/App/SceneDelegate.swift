@@ -55,11 +55,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.tintColor = .black
         tabBarController.setViewControllers([recommendVC, searchVC, likeVC], animated: true)
-        tabBarController.tabBar.items![0].title = Resources.Keys.TabTitle.tab_0.rawValue.localized
+        tabBarController.tabBar.items![0].title = Resources.Keys.Title.recommend.rawValue.localized
         tabBarController.tabBar.items![0].image = UIImage(systemName: Resources.SystemImage.recommend.rawValue)
-        tabBarController.tabBar.items![1].title = Resources.Keys.TabTitle.tab_1.rawValue.localized
+        tabBarController.tabBar.items![1].title = Resources.Keys.Title.search.rawValue.localized
         tabBarController.tabBar.items![1].image = UIImage(systemName: Resources.SystemImage.search.rawValue)
-        tabBarController.tabBar.items![2].title = Resources.Keys.TabTitle.tab_2.rawValue.localized
+        tabBarController.tabBar.items![2].title = Resources.Keys.Title.like.rawValue.localized
         tabBarController.tabBar.items![2].image = UIImage(systemName: Resources.SystemImage.like.rawValue)
         return tabBarController
     }
