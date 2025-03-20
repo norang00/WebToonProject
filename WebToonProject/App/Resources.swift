@@ -23,6 +23,13 @@ enum Resources {
         case chevronRight = "chevron.right"
     }
     
+    enum CustomImage: String {
+        case basic = "basicImage"
+        case isEnd = "isEnd"
+        case isFree = "isFree"
+        case isUpdated = "isUpdated"
+    }
+    
     enum Keys {
         enum Title: String {
             case recommend = "recommend"
