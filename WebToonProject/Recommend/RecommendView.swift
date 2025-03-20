@@ -74,6 +74,7 @@ final class RecommendView: BaseView {
         dailyButton.titleLabel?.font = .pretendardBold(ofSize: 18)
         dailyButton.backgroundColor = .accent
         
+        sectionHeaderView.titleLabel.text = Resources.Keys.updated.rawValue.localized
         collectionView.isScrollEnabled = false
     }
     

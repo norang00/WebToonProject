@@ -8,12 +8,22 @@
 import UIKit
 
 final class SearchViewController: BaseViewController {
+    
+    private let searchView = SearchView()
+    
+    override func loadView() {
+        view = searchView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        view.backgroundColor = .yellow
+        self.navigationItem.title = Resources.Keys.search.rawValue.localized
 
+        bind()
+    }
+    
+    private func bind() {
+        
     }
 
 }
