@@ -8,11 +8,14 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class RecommendViewController: BaseViewController {
 
     private let recommendView = RecommendView()
-    private let recommendViewModel = RecommendViewModel()
+    private let viewModel = RecommendViewModel()
+        
+    private let fetchBannerTrigger = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
     
@@ -22,50 +25,34 @@ final class RecommendViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = Resources.Keys.Title.recommend.rawValue.localized
-        
-        configureBannerView()
+        self.navigationItem.title = Resources.Keys.recommend.rawValue.localized
         configureCollectionView()
         
         bind()
+        fetchBannerTrigger.accept(())
     }
     
     private func bind() {
-        let input = RecommendViewModel.Input()
-        let output = recommendViewModel.transform(input)
+        let input = RecommendViewModel.Input(
+            fetchBannerImagesTrigger: fetchBannerTrigger
+        )
+        let output = viewModel.transform(input)
         
         output.resultList
-            .do { resultList in
-                if resultList.isEmpty {
-                    self.showAlert(title: "alert title",
-                                   message: "alert message")
-                }
-            }
             .drive(recommendView.collectionView.rx.items(
                 cellIdentifier: BasicCollectionViewCell.identifier,
                 cellType: BasicCollectionViewCell.self)) { index, item, cell in
                     cell.configureData(item)
                 }
                 .disposed(by: disposeBag)
-    }
 
-}
-
-// MARK: - BannerView
-extension RecommendViewController {
-    
-    private func configureBannerView() {
-        let images = [
-            UIImage(named: "Image001")!,
-            UIImage(named: "Image002")!,
-            UIImage(named: "Image003")!,
-            UIImage(named: "Image004")!,
-            UIImage(named: "Image005")!
-        ]
-        recommendView.bannerView.setImages(images)
+        output.bannerImages
+            .drive(onNext: { [weak self] images in
+                self?.recommendView.bannerView.setImages(images)
+            })
+            .disposed(by: disposeBag)
     }
 }
-
 // MARK: - DailyButton
 extension RecommendViewController {
     

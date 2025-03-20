@@ -6,60 +6,59 @@
 //
 
 import UIKit
+import SnapKit
 
-final class BannerView: BaseView {
-    
-    private var imageView = UIImageView()
+final class BannerView: UIView {
+
     private var images: [UIImage] = []
+    private let imageView = UIImageView()
     private var currentIndex = 0
-    private var timer: Timer?
-
-    override func configureHierarchy() {
-        addSubview(imageView)
-    }
     
-    override func configureLayout() {
+    private var timer: Timer?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureView()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureView()
+    }
+
+    private func configureView() {
+        addSubview(imageView)
+        
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-    }
-    
-    override func configureView() {
+        
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        imageView.frame = self.bounds
-    }
 
-    //[TODO] ViewModel
     func setImages(_ images: [UIImage]) {
         self.images = images
         if let first = images.first {
             imageView.image = first
         }
-        startTimer()
+        startBannerRotation()
     }
     
-    private func startTimer() {
+    private func startBannerRotation() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-            self?.nextImage()
-        }
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(nextImage), userInfo: nil, repeats: true)
     }
-    
-    private func nextImage() {
+
+    @objc private func nextImage() {
         guard !images.isEmpty else { return }
         currentIndex = (currentIndex + 1) % images.count
         UIView.transition(with: imageView, duration: 0.5, options: .transitionCrossDissolve, animations: {
             self.imageView.image = self.images[self.currentIndex]
-        }, completion: nil)
+        })
     }
     
     deinit {
         timer?.invalidate()
     }
-    
 }

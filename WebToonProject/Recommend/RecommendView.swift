@@ -15,8 +15,8 @@ final class RecommendView: BaseView {
     private let contentView = UIView()
     
     let bannerView = BannerView()
-    private let dailyButton = UIButton()
-    private let sectionHeaderView = SectionHeaderView()
+    let dailyButton = UIButton()
+    let sectionHeaderView = SectionHeaderView()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     
     override func configureHierarchy() {
@@ -42,13 +42,13 @@ final class RecommendView: BaseView {
         bannerView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(240)
+            make.height.equalTo(160)
         }
         
         dailyButton.snp.makeConstraints { make in
             make.top.equalTo(bannerView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(80)
+            make.height.equalTo(50)
         }
         
         sectionHeaderView.snp.makeConstraints { make in
@@ -60,9 +60,8 @@ final class RecommendView: BaseView {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(sectionHeaderView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            collectionViewHeightConstraint = make.height.equalTo(0).constraint
-
             make.bottom.equalTo(contentView.snp.bottom)
+            collectionViewHeightConstraint = make.height.equalTo(0).constraint
         }
     }
     
@@ -71,7 +70,8 @@ final class RecommendView: BaseView {
         
         scrollView.showsVerticalScrollIndicator = false
         
-        dailyButton.setTitle("요일별 웹툰", for: .normal)
+        dailyButton.setTitle(Resources.Keys.dailyWebtoon.rawValue.localized, for: .normal)
+        dailyButton.titleLabel?.font = .pretendardBold(ofSize: 18)
         dailyButton.backgroundColor = .accent
         
         collectionView.isScrollEnabled = false
@@ -82,7 +82,7 @@ final class RecommendView: BaseView {
         // 컬렉션뷰 레이아웃 업데이트 후 콘텐츠 사이즈 계산
         collectionView.layoutIfNeeded()
         let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
-                collectionViewHeightConstraint?.update(offset: contentHeight)
+        collectionViewHeightConstraint?.update(offset: contentHeight)
     }
     
     private func createLayout() -> UICollectionViewLayout {

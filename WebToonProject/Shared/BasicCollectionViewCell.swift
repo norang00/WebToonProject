@@ -26,21 +26,15 @@ final class BasicCollectionViewCell: UICollectionViewCell {
     }
     
     func configureData(_ data: Webtoon) {
-        let isEndImage = UIImage(named: Resources.CustomImage.isEnd.rawValue)
-        let isFreeImage = UIImage(named: Resources.CustomImage.isFree.rawValue)
-        let isUpdatedImage = UIImage(named: Resources.CustomImage.isUpdated.rawValue)
-        
-        if data.isUpdated {
-            infoImageView.image = isUpdatedImage
-        } else if data.isFree {
-            infoImageView.image = isFreeImage
-        } else if data.isEnd {
-            infoImageView.image = isEndImage
-        } else {
-            infoImageView.image = nil // 아무 이미지도 표시하지 않음
-        }
+        // infoImageView
+        let image: UIImage? = data.isUpdated ? UIImage(named: Resources.CustomImage.isUpdated.rawValue)
+                            : data.isFree ? UIImage(named: Resources.CustomImage.isFree.rawValue)
+                            : data.isEnd ? UIImage(named: Resources.CustomImage.isEnd.rawValue)
+                            : nil
+        infoImageView.image = image
         infoImageView.contentMode = .scaleAspectFit
 
+        // mainImageView
         guard let thumbnailString = data.thumbnail.first,
               let url = URL(string: thumbnailString) else { return }
 
@@ -49,13 +43,17 @@ final class BasicCollectionViewCell: UICollectionViewCell {
             request.setValue("https://comic.naver.com", forHTTPHeaderField: "Referer")
             return request
         }
-        
+
         mainImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "basicImage"), options: [.requestModifier(modifier)])
         mainImageView.contentMode = .scaleAspectFill
         mainImageView.clipsToBounds = true
 
+        // Labels
         mainLabel.text = data.title
+        mainLabel.font = .pretendardRegular(ofSize: 14)
         subLabel.text = data.authors.first ?? ""
+        subLabel.textColor = .textGray
+        subLabel.font = .pretendardMedium(ofSize: 12)
     }
     
 }
