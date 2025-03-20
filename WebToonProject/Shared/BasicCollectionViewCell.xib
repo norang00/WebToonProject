@@ -27,10 +27,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WzA-8T-Gvo">
-                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="OwE-8p-LvO"/>
-                            <constraint firstAttribute="width" constant="20" id="dh7-uC-3d5"/>
+                            <constraint firstAttribute="height" constant="30" id="OwE-8p-LvO"/>
+                            <constraint firstAttribute="width" constant="30" id="dh7-uC-3d5"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBt-Eu-Hdf">
@@ -59,6 +59,7 @@
             </constraints>
             <size key="customSize" width="311" height="563"/>
             <connections>
+                <outlet property="infoImageView" destination="WzA-8T-Gvo" id="FUe-pW-1fb"/>
                 <outlet property="mainImageView" destination="DPs-h2-a9n" id="WUz-eC-aUb"/>
                 <outlet property="mainLabel" destination="ahW-la-ORU" id="o5D-bn-QlS"/>
                 <outlet property="subLabel" destination="zBt-Eu-Hdf" id="PF6-Kd-IOt"/>

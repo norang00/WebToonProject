@@ -22,6 +22,7 @@ final class SectionHeaderView: BaseView {
         titleLabel.snp.makeConstraints { make in
             make.top.bottom.leading.equalToSuperview().inset(8)
         }
+        
         button.snp.makeConstraints { make in
             make.top.bottom.trailing.equalToSuperview().inset(8)
         }

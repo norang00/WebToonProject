@@ -33,8 +33,8 @@ final class BannerView: BaseView {
         super.layoutSubviews()
         imageView.frame = self.bounds
     }
-    
-    // 이미지 배열을 설정하고 타이머를 시작
+
+    //[TODO] ViewModel
     func setImages(_ images: [UIImage]) {
         self.images = images
         if let first = images.first {

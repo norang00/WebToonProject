@@ -11,11 +11,11 @@ import RxCocoa
 
 final class RecommendViewModel: BaseViewModel {
     
-    private let resultList = PublishRelay<[Webtoon]>()
-    private let errorMessage = PublishRelay<CustomError>()
-
     // internal use
     private let page = 1
+    
+    private let resultList = PublishRelay<[Webtoon]>()
+    private let errorMessage = PublishRelay<CustomError>()
     
     private let disposeBag = DisposeBag()
     
@@ -28,9 +28,7 @@ final class RecommendViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-
-        fetchData()
-
+        callRequest() // init
         
         return Output(
             resultList: resultList.asDriver(onErrorJustReturn: []),
@@ -38,20 +36,13 @@ final class RecommendViewModel: BaseViewModel {
         )
     }
     
-    private func fetchData() {
-        callRequestToNetworkManager()
-    }
-     
-    
-    private func callRequestToNetworkManager() {
+    private func callRequest() {
         let api = NetworkRequest.webtoon(keyword: nil, page: page, sort: nil, isUpdated: nil, isFree: nil, day: nil)
-        NetworkManager.shared.callRequestToAPIServer(api, Welcome.self) { [weak self] response in
+        NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
             switch response {
             case .success(let data):
                 self?.resultList.accept(data.webtoons)
-                dump(data)
             case .failure(let error):
-                print(error)
                 self?.errorMessage.accept(error)
             }
         }
