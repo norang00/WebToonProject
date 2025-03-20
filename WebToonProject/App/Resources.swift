@@ -30,11 +30,13 @@ enum Resources {
         case isUpdated = "isUpdated"
     }
     
-    enum Keys {
-        enum Title: String {
-            case recommend = "recommend"
-            case search = "search"
-            case like = "like"
-        }
+    // Keys for localization
+    enum Keys: String {
+        case recommend = "recommend"
+        case search = "search"
+        case like = "like"
+        
+        case dailyWebtoon = "dailyWebtoon"
+        case updated = "updated"
     }
 }

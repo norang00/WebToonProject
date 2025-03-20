@@ -7,17 +7,17 @@
 
 import Foundation
 
-// MARK: - Welcome
-struct Welcome: Codable {
+// MARK: - WebToonData
+struct WebToonData: Decodable {
     let webtoons: [Webtoon]
     let total: Int
     let isLastPage: Bool
 }
 
 // MARK: - Webtoon
-struct Webtoon: Codable {
+struct Webtoon: Decodable {
     let id, title: String
-    let provider: Provider
+    let provider: String
     let updateDays: [String]
     let url: String
     let thumbnail: [String]
@@ -25,8 +25,4 @@ struct Webtoon: Codable {
     let ageGrade: Int
     let freeWaitHour: Int?
     let authors: [String]
-}
-
-enum Provider: String, Codable {
-    case naver = "NAVER"
 }

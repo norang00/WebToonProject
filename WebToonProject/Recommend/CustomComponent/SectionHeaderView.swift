@@ -22,6 +22,7 @@ final class SectionHeaderView: BaseView {
         titleLabel.snp.makeConstraints { make in
             make.top.bottom.leading.equalToSuperview().inset(8)
         }
+        
         button.snp.makeConstraints { make in
             make.top.bottom.trailing.equalToSuperview().inset(8)
         }
@@ -30,9 +31,10 @@ final class SectionHeaderView: BaseView {
     override func configureView() {
         super.configureView()
         
-        titleLabel.text = "인기 급상승 중"
-        titleLabel.font = UIFont(name: Resources.Font.bold.rawValue, size: 16)
+        titleLabel.text = Resources.Keys.updated.rawValue.localized
+        titleLabel.font = .pretendardBold(ofSize: 20)
         
+        button.isHidden = true
         button.setImage(UIImage(systemName: Resources.SystemImage.chevronRight.rawValue), for: .normal)
         button.tintColor = .black
     }
