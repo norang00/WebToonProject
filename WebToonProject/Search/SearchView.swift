@@ -21,6 +21,7 @@ final class SearchView: BaseView {
     let authorBadges: [SearchBadgeButton] = []
     
     let tableView = UITableView()
+    let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
     override func configureHierarchy() {
         addSubview(searchBarBackgroundView)
@@ -90,7 +91,6 @@ final class SearchView: BaseView {
 
         searchBar.tintColor = .black
         searchBar.placeholder = Resources.Keys.placeholder.rawValue.localized
-//        searchBar.isTranslucent = true
         searchBar.backgroundColor = .clear
         searchBar.searchTextField.font = .pretendardBold(ofSize: 16)
         searchBar.searchTextField.backgroundColor = .clear
@@ -111,6 +111,10 @@ final class SearchView: BaseView {
         tableView.keyboardDismissMode = .onDrag
         tableView.register(UINib(nibName: BasicTableViewCell.identifier, bundle: nil),
                            forCellReuseIdentifier: BasicTableViewCell.identifier)
+
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.color = .lightGray
+        tableView.tableFooterView = loadingIndicator
     }
     
     private func makeFilterBadges() {

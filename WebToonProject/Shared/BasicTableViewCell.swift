@@ -61,7 +61,7 @@ class BasicTableViewCell: UITableViewCell {
 
         let dummyRating = Double.random(in: 0...5)
         colorStarImages(dummyRating)
-        ratingLabel.text = String(format: "%.1f", dummyRating)
+        ratingLabel.text = "(\(String(format: "%.1f", dummyRating)))"
     }
     
     private func colorStarImages(_ grade: Double) {

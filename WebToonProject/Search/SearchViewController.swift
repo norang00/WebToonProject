@@ -28,12 +28,35 @@ final class SearchViewController: BaseViewController {
     }
     
     private func bind() {
+        let reachedBottomTrigger = searchView.tableView.rx.prefetchRows
+            .map { $0.map { $0.row }.max() ?? 0 }
+            .distinctUntilChanged()
+            .withLatestFrom(searchViewModel.resultList.asObservable()) { index, items in (index, items.count)
+            }
+            .filter { index, count in
+                return index >= count - 2
+            }
+            .map { _ in }
+        
         let input = SearchViewModel.Input(
             searchClicked: searchView.searchBar.rx.searchButtonClicked,
-            searchText: searchView.searchBar.rx.text.orEmpty
+            searchText: searchView.searchBar.rx.text.orEmpty,
+            reachedBottom: reachedBottomTrigger
         )
         let output = searchViewModel.transform(input)
         
+        searchViewModel.isLoading
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, isLoading in
+                if isLoading {
+                    owner.searchView.loadingIndicator.startAnimating()
+                } else {
+                    owner.searchView.loadingIndicator.stopAnimating()
+                }
+            }
+            .disposed(by: disposeBag)
+
         output.resultList
             .debug("resultList")
             .do(onNext: { [weak self] _ in
