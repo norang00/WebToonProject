@@ -62,9 +62,16 @@ final class SearchViewController: BaseViewController {
             .do(onNext: { [weak self] _ in
                 self?.searchView.tableView.isHidden = false
             })
-            .drive(searchView.tableView.rx.items(cellIdentifier: BasicTableViewCell.identifier, cellType: BasicTableViewCell.self)) { index, item, cell in
-                print("resultList", index, item.title)
-                cell.configureData(item)
+            .drive(searchView.tableView.rx.items(
+                cellIdentifier: BasicTableViewCell.identifier,
+                cellType: BasicTableViewCell.self
+            )) { index, item, cell in
+                if item.title == "__shimmer__" {
+                    cell.showShimmer()
+                } else {
+                    cell.hideShimmer()
+                    cell.configureData(item)
+                }
             }
             .disposed(by: disposeBag)
     }

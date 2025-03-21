@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 
 final class SearchViewModel: BaseViewModel {
-    
 
     // for pagination
     private var currentPage = 1
@@ -46,6 +45,7 @@ final class SearchViewModel: BaseViewModel {
                 owner.currentPage = 1
                 owner.resultToShow = []
                 owner.hasNextPage = true
+                owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 5))
                 owner.callRequestToNetworkManager(owner.currentKeyword, owner.currentPage)
             }
             .disposed(by: disposeBag)
