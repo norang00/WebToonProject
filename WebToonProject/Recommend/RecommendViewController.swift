@@ -8,12 +8,11 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import Kingfisher
 
 final class RecommendViewController: BaseViewController {
 
     private let recommendView = RecommendView()
-    private let viewModel = RecommendViewModel()
+    private let recommendViewModel = RecommendViewModel()
         
     private let fetchBannerTrigger = PublishRelay<Void>()
     
@@ -36,7 +35,7 @@ final class RecommendViewController: BaseViewController {
         let input = RecommendViewModel.Input(
             fetchBannerImagesTrigger: fetchBannerTrigger
         )
-        let output = viewModel.transform(input)
+        let output = recommendViewModel.transform(input)
         
         output.resultList
             .drive(recommendView.collectionView.rx.items(
@@ -62,7 +61,7 @@ extension RecommendViewController {
 extension RecommendViewController {
     
     private func configureCollectionView() {
-        recommendView.collectionView.register(UINib(nibName: "BasicCollectionViewCell", bundle: nil),
+        recommendView.collectionView.register(UINib(nibName: BasicCollectionViewCell.identifier, bundle: nil),
                                               forCellWithReuseIdentifier: BasicCollectionViewCell.identifier)
 
     }

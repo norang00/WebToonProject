@@ -8,12 +8,6 @@
 import Foundation
 
 enum Resources {
-    enum Font: String {
-        case bold = "Pretendard-Bold"
-        case medium = "Pretendard-Medium"
-        case regular = "Pretendard-Regular"
-    }
-    
     enum SystemImage: String {
         case back = "arrow.left"
         case search = "magnifyingglass"
@@ -28,15 +22,29 @@ enum Resources {
         case isEnd = "isEnd"
         case isFree = "isFree"
         case isUpdated = "isUpdated"
+        case starGreen = "star_green"
+        case starGray = "star_gray"
     }
     
     // Keys for localization
     enum Keys: String {
+        //general title
         case recommend = "recommend"
         case search = "search"
         case like = "like"
         
+        //button title
         case dailyWebtoon = "dailyWebtoon"
+        
+        //section title
         case updated = "updated"
+        case searchByFilter = "searchByFilter"
+        case searchByAuthor = "searchByAuthor"
+
+        //searchBar placeholder
+        case placeholder = "placeholder"
+        
+        case searchIsFree = "searchIsFree"
+        case searchIsUpdated = "searchIsUpdated"
     }
 }

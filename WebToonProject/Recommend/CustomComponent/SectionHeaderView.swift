@@ -10,8 +10,8 @@ import SnapKit
 
 final class SectionHeaderView: BaseView {
 
-    private let titleLabel = UILabel()
-    private let button = UIButton()
+    let titleLabel = UILabel()
+    let button = UIButton()
     
     override func configureHierarchy() {
         addSubview(titleLabel)
@@ -31,7 +31,6 @@ final class SectionHeaderView: BaseView {
     override func configureView() {
         super.configureView()
         
-        titleLabel.text = Resources.Keys.updated.rawValue.localized
         titleLabel.font = .pretendardBold(ofSize: 20)
         
         button.isHidden = true

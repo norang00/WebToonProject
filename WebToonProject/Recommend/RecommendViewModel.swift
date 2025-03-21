@@ -12,9 +12,6 @@ import Kingfisher
 
 final class RecommendViewModel: BaseViewModel {
     
-    // pagination use
-    private let page = 1
-    
     private let resultList = PublishRelay<[Webtoon]>()
     private let errorMessage = PublishRelay<CustomError>()
     private let bannerImages = PublishRelay<[UIImage]>()
@@ -50,7 +47,7 @@ final class RecommendViewModel: BaseViewModel {
     }
     
     private func callRequest() {
-        let api = NetworkRequest.webtoon(keyword: nil, page: page, sort: nil, isUpdated: true, isFree: nil, day: nil)
+        let api = NetworkRequest.webtoon(keyword: nil, page: 1, sort: nil, isUpdated: true, isFree: nil, day: nil)
         NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
             switch response {
             case .success(let data):
