@@ -14,11 +14,11 @@ final class SearchView: BaseView {
 
     let searchByFilterHeader = SectionHeaderView()
     let searchByFilterStackView = UIStackView()
-    let filterBadges: [SearchBadgeButton] = []
+    var filterButtons: [SearchBadgeButton] = []
     
     let searchByAuthorHeader = SectionHeaderView()
     let searchByAuthorStackView = UIStackView()
-    let authorBadges: [SearchBadgeButton] = []
+    var authorButtons: [SearchBadgeButton] = []
     
     let tableView = UITableView()
     let loadingIndicator = UIActivityIndicatorView(style: .medium)
@@ -39,9 +39,9 @@ final class SearchView: BaseView {
     override func configureLayout() {
         searchBarBackgroundView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide).offset(8)
+            make.top.equalTo(safeAreaLayoutGuide)
             make.horizontalEdges.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+            make.height.equalTo(40)
         }
         
         searchBar.snp.makeConstraints { make in
@@ -51,34 +51,34 @@ final class SearchView: BaseView {
         
         searchByFilterHeader.snp.makeConstraints { make in
             make.top.equalTo(searchBarBackgroundView.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+            make.horizontalEdges.equalToSuperview().inset(8)
+            make.height.equalTo(40)
         }
         
         searchByFilterStackView.snp.makeConstraints { make in
-            make.top.equalTo(searchByFilterHeader.snp.bottom).offset(8)
+            make.top.equalTo(searchByFilterHeader.snp.bottom)
             make.leading.equalTo(safeAreaLayoutGuide).inset(16)
             make.width.greaterThanOrEqualTo(50)
             make.height.equalTo(32)
         }
-        makeFilterBadges()
+        makeFilterButtons()
         
         searchByAuthorHeader.snp.makeConstraints { make in
-            make.top.equalTo(searchByFilterStackView.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+            make.top.equalTo(searchByFilterStackView.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(8)
+            make.height.equalTo(40)
         }
         
         searchByAuthorStackView.snp.makeConstraints { make in
-            make.top.equalTo(searchByAuthorHeader.snp.bottom).offset(8)
+            make.top.equalTo(searchByAuthorHeader.snp.bottom)
             make.leading.equalTo(safeAreaLayoutGuide).inset(16)
             make.width.greaterThanOrEqualTo(50)
             make.height.equalTo(32)
         }
-        makeAuthorBadges()
+        makeAuthorButtons()
 
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(searchBarBackgroundView.snp.bottom).offset(16)
+            make.top.equalTo(searchBarBackgroundView.snp.bottom).offset(12)
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
@@ -117,7 +117,7 @@ final class SearchView: BaseView {
         tableView.tableFooterView = loadingIndicator
     }
     
-    private func makeFilterBadges() {
+    private func makeFilterButtons() {
         let filterList = [
             Resources.Keys.searchIsFree.rawValue.localized,
             Resources.Keys.searchIsUpdated.rawValue.localized
@@ -126,10 +126,11 @@ final class SearchView: BaseView {
             let button = SearchBadgeButton()
             button.setTitle(filter, for: .normal)
             searchByFilterStackView.addArrangedSubview(button)
+            filterButtons.append(button)
         }
     }
 
-    private func makeAuthorBadges() {
+    private func makeAuthorButtons() {
         let authorList = [
             "자까", "순끼", "이말년", "조석", "박태준", "모죠"
         ]
@@ -137,6 +138,7 @@ final class SearchView: BaseView {
             let button = SearchBadgeButton()
             button.setTitle(author, for: .normal)
             searchByAuthorStackView.addArrangedSubview(button)
+            authorButtons.append(button)
         }
     }
 }

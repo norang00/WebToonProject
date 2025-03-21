@@ -16,6 +16,9 @@ final class SearchViewController: BaseViewController {
     
     private let disposeBag = DisposeBag()
     
+    private var selectedFilterButton: UIButton?
+    private var selectedAuthorButton: UIButton?
+    
     override func loadView() {
         view = searchView
     }
@@ -23,11 +26,36 @@ final class SearchViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = Resources.Keys.search.rawValue.localized
-
         bind()
     }
     
     private func bind() {
+        let filterButtons = searchView.filterButtons
+        let filterButtonTapped = Observable.from(filterButtons)
+            .flatMap { button in
+                button.rx.tap
+                    .map { [weak self] in
+                        self?.searchView.tableView.isHidden = false
+                        let name = button.title(for: .normal) ?? ""
+                        self?.searchView.searchBar.text = name
+                        return name
+                    }
+                    .compactMap { FilterType(title: $0) }
+            }
+        
+        let authorButtons = searchView.authorButtons
+        let authorButtonTapped = Observable.merge(
+            authorButtons.map { button in
+                button.rx.tap
+                    .map { [weak self] in
+                        self?.searchView.tableView.isHidden = false
+                        let name = button.title(for: .normal) ?? ""
+                        self?.searchView.searchBar.text = name
+                        return name
+                    }
+            }
+        )
+        
         let reachedBottomTrigger = searchView.tableView.rx.prefetchRows
             .map { $0.map { $0.row }.max() ?? 0 }
             .distinctUntilChanged()
@@ -41,9 +69,19 @@ final class SearchViewController: BaseViewController {
         let input = SearchViewModel.Input(
             searchClicked: searchView.searchBar.rx.searchButtonClicked,
             searchText: searchView.searchBar.rx.text.orEmpty,
+            filterButtonTapped: filterButtonTapped,
+            authorButtonTapped: authorButtonTapped,
             reachedBottom: reachedBottomTrigger
         )
         let output = searchViewModel.transform(input)
+
+        searchView.searchBar.rx.text.orEmpty
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, value in
+                owner.searchView.tableView.isHidden = value.isEmpty
+            }
+            .disposed(by: disposeBag)
         
         searchViewModel.isLoading
             .distinctUntilChanged()
@@ -58,8 +96,8 @@ final class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
 
         output.resultList
-            .debug("resultList")
             .do(onNext: { [weak self] _ in
+                self?.searchView.endEditing(true)
                 self?.searchView.tableView.isHidden = false
             })
             .drive(searchView.tableView.rx.items(
@@ -76,4 +114,20 @@ final class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
 
+}
+
+enum FilterType {
+    case isFree
+    case isUpdated
+
+    init?(title: String) {
+        switch title {
+        case Resources.Keys.searchIsFree.rawValue.localized:
+            self = .isFree
+        case Resources.Keys.searchIsUpdated.rawValue.localized:
+            self = .isUpdated
+        default:
+            return nil
+        }
+    }
 }

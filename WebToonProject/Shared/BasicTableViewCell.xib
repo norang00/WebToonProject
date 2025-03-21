@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cgm-4F-eqi">
-                        <rect key="frame" x="16" y="16" width="80" height="125"/>
+                        <rect key="frame" x="16" y="12" width="80" height="133"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="dUv-nZ-cV3"/>
                         </constraints>
@@ -82,10 +82,17 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="moa-Yb-e69">
+                        <rect key="frame" x="16" y="12" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="4bq-yP-xfi"/>
+                            <constraint firstAttribute="width" secondItem="moa-Yb-e69" secondAttribute="height" multiplier="1:1" id="Mcs-e4-8Zc"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="kHZ-4R-sbw" firstAttribute="top" secondItem="FK9-Rd-zMu" secondAttribute="bottom" constant="8" id="0Ew-vC-hCp"/>
-                    <constraint firstItem="Cgm-4F-eqi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="2Bw-B1-DOR"/>
+                    <constraint firstItem="Cgm-4F-eqi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="2Bw-B1-DOR"/>
                     <constraint firstItem="h4c-yo-XOI" firstAttribute="centerY" secondItem="u2z-IL-DUJ" secondAttribute="centerY" id="8cW-4k-mBd"/>
                     <constraint firstItem="h4c-yo-XOI" firstAttribute="leading" secondItem="u2z-IL-DUJ" secondAttribute="trailing" constant="4" id="FEe-7C-ULk"/>
                     <constraint firstItem="FK9-Rd-zMu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="ILf-z0-Q9Q"/>
@@ -96,9 +103,11 @@
                     <constraint firstItem="HmS-mf-tl6" firstAttribute="leading" secondItem="wBP-Rl-gob" secondAttribute="trailing" constant="2" id="SIH-y5-f0d"/>
                     <constraint firstAttribute="bottom" secondItem="xnE-fj-J7K" secondAttribute="bottom" constant="24" id="Szm-DE-JmT"/>
                     <constraint firstAttribute="bottom" secondItem="Mi8-jI-1uO" secondAttribute="bottom" constant="24" id="VN0-Gw-uKB"/>
-                    <constraint firstAttribute="bottom" secondItem="Cgm-4F-eqi" secondAttribute="bottom" constant="16" id="bjC-UU-KBO"/>
+                    <constraint firstItem="moa-Yb-e69" firstAttribute="top" secondItem="Cgm-4F-eqi" secondAttribute="top" id="YzA-KX-a3Z"/>
+                    <constraint firstAttribute="bottom" secondItem="Cgm-4F-eqi" secondAttribute="bottom" constant="12" id="bjC-UU-KBO"/>
                     <constraint firstItem="wBP-Rl-gob" firstAttribute="leading" secondItem="Cgm-4F-eqi" secondAttribute="trailing" constant="16" id="ccY-D7-l6s"/>
                     <constraint firstItem="kHZ-4R-sbw" firstAttribute="leading" secondItem="Cgm-4F-eqi" secondAttribute="trailing" constant="16" id="cqD-Lg-elK"/>
+                    <constraint firstItem="moa-Yb-e69" firstAttribute="leading" secondItem="Cgm-4F-eqi" secondAttribute="leading" id="eIO-ci-vh2"/>
                     <constraint firstItem="xnE-fj-J7K" firstAttribute="leading" secondItem="HmS-mf-tl6" secondAttribute="trailing" constant="2" id="gbA-H4-w45"/>
                     <constraint firstItem="Cgm-4F-eqi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="lxZ-VS-gi7"/>
                     <constraint firstItem="FK9-Rd-zMu" firstAttribute="leading" secondItem="Cgm-4F-eqi" secondAttribute="trailing" constant="16" id="nz2-e7-ur4"/>
@@ -108,6 +117,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="authorLabel" destination="kHZ-4R-sbw" id="P06-Xq-0LT"/>
+                <outlet property="infoImageView" destination="moa-Yb-e69" id="7C6-Sh-1TE"/>
                 <outlet property="mainImageView" destination="Cgm-4F-eqi" id="XjC-Xe-pBu"/>
                 <outlet property="ratingLabel" destination="h4c-yo-XOI" id="ZAR-ZB-JtZ"/>
                 <outlet property="titleLabel" destination="FK9-Rd-zMu" id="YOz-d1-RXV"/>

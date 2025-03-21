@@ -27,6 +27,12 @@ final class SearchBadgeButton: UIButton {
         return contentSize
     }
     
+    override var isSelected: Bool {
+        didSet {
+            backgroundColor = isSelected ? .white : .bgGray
+        }
+    }
+    
     private func configureButton() {
         titleLabel?.font = .bodyFont
         setTitleColor(.black, for: .normal)
