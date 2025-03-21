@@ -20,6 +20,8 @@ final class SearchView: BaseView {
     let searchByAuthorStackView = UIStackView()
     let authorBadges: [SearchBadgeButton] = []
     
+    let tableView = UITableView()
+    
     override func configureHierarchy() {
         addSubview(searchBarBackgroundView)
         searchBarBackgroundView.addSubview(searchBar)
@@ -29,6 +31,8 @@ final class SearchView: BaseView {
         
         addSubview(searchByAuthorHeader)
         addSubview(searchByAuthorStackView)
+        
+        addSubview(tableView)
     }
     
     override func configureLayout() {
@@ -72,6 +76,10 @@ final class SearchView: BaseView {
         }
         makeAuthorBadges()
 
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(searchBarBackgroundView.snp.bottom).offset(16)
+            make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
+        }
     }
     
     override func configureView() {
@@ -97,6 +105,10 @@ final class SearchView: BaseView {
  
         searchByAuthorStackView.axis = .horizontal
         searchByAuthorStackView.spacing = 8
+
+        tableView.isHidden = true
+        tableView.rowHeight = 120
+        tableView.register(UINib(nibName: BasicTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: BasicTableViewCell.identifier)
     }
     
     private func makeFilterBadges() {
