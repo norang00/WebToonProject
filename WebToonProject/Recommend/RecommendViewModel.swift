@@ -19,6 +19,7 @@ final class RecommendViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
     
     struct Input {
+        let viewDidLoadTrigger: PublishRelay<Void>
         let fetchBannerImagesTrigger: PublishRelay<Void>
     }
     
@@ -29,8 +30,14 @@ final class RecommendViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-        callRequest()
-        
+        input.viewDidLoadTrigger
+            .bind(with: self) { owner, _ in
+                let shimmer = Webtoon.shimmer
+                owner.resultList.accept(Array(repeating: shimmer, count: 6))
+                owner.callRequest()
+            }
+            .disposed(by: disposeBag)
+
         input.fetchBannerImagesTrigger
             .flatMapLatest { [weak self] _ -> Observable<[UIImage]> in
                 guard let self = self else { return .just([]) }

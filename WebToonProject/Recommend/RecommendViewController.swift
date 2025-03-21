@@ -13,8 +13,8 @@ final class RecommendViewController: BaseViewController {
 
     private let recommendView = RecommendView()
     private let recommendViewModel = RecommendViewModel()
-        
-    private let fetchBannerTrigger = PublishRelay<Void>()
+    
+    private let viewDidLoadTrigger = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
     
@@ -28,12 +28,13 @@ final class RecommendViewController: BaseViewController {
         configureCollectionView()
         
         bind()
-        fetchBannerTrigger.accept(())
+        viewDidLoadTrigger.accept(())
     }
     
     private func bind() {
         let input = RecommendViewModel.Input(
-            fetchBannerImagesTrigger: fetchBannerTrigger
+            viewDidLoadTrigger: viewDidLoadTrigger,
+            fetchBannerImagesTrigger: viewDidLoadTrigger
         )
         let output = recommendViewModel.transform(input)
         
@@ -41,7 +42,12 @@ final class RecommendViewController: BaseViewController {
             .drive(recommendView.collectionView.rx.items(
                 cellIdentifier: BasicCollectionViewCell.identifier,
                 cellType: BasicCollectionViewCell.self)) { index, item, cell in
-                    cell.configureData(item)
+                    if item.title == "__shimmer__" {
+                        cell.showShimmer()
+                    } else {
+                        cell.hideShimmer()
+                        cell.configureData(item)
+                    }
                 }
                 .disposed(by: disposeBag)
 

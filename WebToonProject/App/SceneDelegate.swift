@@ -63,7 +63,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.tabBar.items![2].image = UIImage(systemName: Resources.SystemImage.like.rawValue)
         
         // [Temp]
-        tabBarController.selectedIndex = 1
+        tabBarController.selectedIndex = 0
         
         return tabBarController
     }
