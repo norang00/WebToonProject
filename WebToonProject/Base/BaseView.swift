@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import RxGesture
 
 class BaseView: UIView {
+    
+    let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -15,6 +20,8 @@ class BaseView: UIView {
         configureHierarchy()
         configureLayout()
         configureView()
+        
+        configureKeyboardDismiss()
     }
     
     @available(*, unavailable)
@@ -26,5 +33,16 @@ class BaseView: UIView {
     func configureLayout() { }
     func configureView() {
         backgroundColor = .white
+    }
+    
+    private func configureKeyboardDismiss() {
+        self.rx.tapGesture() { recognizer, _ in
+            recognizer.cancelsTouchesInView = false
+        }
+        .when(.recognized)
+        .bind(with: self) { owner, _ in
+            owner.endEditing(true)
+        }
+        .disposed(by: disposeBag)
     }
 }
