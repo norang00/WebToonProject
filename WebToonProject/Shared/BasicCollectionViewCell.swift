@@ -49,11 +49,12 @@ final class BasicCollectionViewCell: UICollectionViewCell {
         mainImageView.clipsToBounds = true
 
         // Labels
-        mainLabel.text = data.title
         mainLabel.font = .pretendardRegular(ofSize: 14)
+        mainLabel.text = data.title
+
+        subLabel.font = .pretendardMedium(ofSize: 12)
         subLabel.text = data.authors.first ?? ""
         subLabel.textColor = .textGray
-        subLabel.font = .pretendardMedium(ofSize: 12)
     }
     
 }
