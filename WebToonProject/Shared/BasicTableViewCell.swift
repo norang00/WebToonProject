@@ -12,6 +12,7 @@ class BasicTableViewCell: UITableViewCell {
     
     static var identifier = String(describing: BasicTableViewCell.self)
 
+    @IBOutlet var infoImageView: UIImageView!
     @IBOutlet var mainImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var authorLabel: UILabel!
@@ -31,6 +32,8 @@ class BasicTableViewCell: UITableViewCell {
     }
     
     private func configureView() {
+        infoImageView.contentMode = .scaleAspectFit
+
         mainImageView.contentMode = .scaleAspectFill
         mainImageView.clipsToBounds = true
 
@@ -44,6 +47,12 @@ class BasicTableViewCell: UITableViewCell {
     }
     
     func configureData(_ data: Webtoon) {
+        let image: UIImage? = data.isUpdated ? UIImage(named: Resources.CustomImage.isUpdated.rawValue)
+        : data.isEnd ? UIImage(named: Resources.CustomImage.isEnd.rawValue)
+                            : data.isFree ? UIImage(named: Resources.CustomImage.isFree.rawValue)
+                            : nil
+        infoImageView.image = image
+        
         guard let thumbnailString = data.thumbnail.first,
               let url = URL(string: thumbnailString) else { return }
 
@@ -61,7 +70,7 @@ class BasicTableViewCell: UITableViewCell {
         authorLabel.text = data.authors.isEmpty ? "" :
                            data.authors.joined(separator: ", ")
 
-        let dummyRating = Double.random(in: 0...5)
+        let dummyRating = Double.random(in: 3...5)
         colorStarImages(dummyRating)
         ratingLabel.text = "(\(String(format: "%.1f", dummyRating)))"
     }
@@ -81,7 +90,7 @@ class BasicTableViewCell: UITableViewCell {
     
     func showShimmer() {
         let viewsToShimmer: [UIView] = [
-            mainImageView, titleLabel, authorLabel, ratingLabel
+            infoImageView, mainImageView, titleLabel, authorLabel, ratingLabel
         ] + starImageViews
         viewsToShimmer.forEach {
             let shimmer = ShimmerView.apply(to: $0)
