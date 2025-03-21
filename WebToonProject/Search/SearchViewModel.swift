@@ -31,6 +31,7 @@ final class SearchViewModel: BaseViewModel {
     
     func transform(_ input: Input) -> Output {
         input.searchClicked
+            .debug("searchClicked")
             .withLatestFrom(input.searchText)
             .distinctUntilChanged()
             .bind(with: self) { owner, keyword in
@@ -52,12 +53,16 @@ final class SearchViewModel: BaseViewModel {
     
     private func callRequest(_ keyword: String) {
         print(#function, keyword)
-        let api = NetworkRequest.webtoon(keyword: keyword, page: page, sort: nil, isUpdated: true, isFree: nil, day: nil)
+        let api = NetworkRequest.webtoon(keyword: keyword, page: page, sort: nil, isUpdated: nil, isFree: nil, day: nil)
         NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
             switch response {
             case .success(let data):
                 self?.resultList.accept(data.webtoons)
+                print("callRequest - parameters", api.parameters)
+                print("callRequest - success", data.webtoons.count)
+                dump(data.webtoons)
             case .failure(let error):
+                print("callRequest - error", error)
                 self?.errorMessage.accept(error)
             }
         }

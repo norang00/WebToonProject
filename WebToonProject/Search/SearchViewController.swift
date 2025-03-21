@@ -35,6 +35,7 @@ final class SearchViewController: BaseViewController {
         let output = searchViewModel.transform(input)
         
         output.resultList
+            .debug("resultList")
             .do(onNext: { [weak self] _ in
                 self?.searchView.tableView.isHidden = false
             })

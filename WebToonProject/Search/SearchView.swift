@@ -90,9 +90,9 @@ final class SearchView: BaseView {
 
         searchBar.tintColor = .black
         searchBar.placeholder = Resources.Keys.placeholder.rawValue.localized
-        searchBar.isTranslucent = true
+//        searchBar.isTranslucent = true
         searchBar.backgroundColor = .clear
-        searchBar.searchTextField.font = .bodyFont
+        searchBar.searchTextField.font = .pretendardBold(ofSize: 16)
         searchBar.searchTextField.backgroundColor = .clear
         searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
 
@@ -107,8 +107,10 @@ final class SearchView: BaseView {
         searchByAuthorStackView.spacing = 8
 
         tableView.isHidden = true
-        tableView.rowHeight = 120
-        tableView.register(UINib(nibName: BasicTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: BasicTableViewCell.identifier)
+        tableView.rowHeight = 140
+        tableView.keyboardDismissMode = .onDrag
+        tableView.register(UINib(nibName: BasicTableViewCell.identifier, bundle: nil),
+                           forCellReuseIdentifier: BasicTableViewCell.identifier)
     }
     
     private func makeFilterBadges() {
