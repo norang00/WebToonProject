@@ -17,6 +17,8 @@ final class BasicCollectionViewCell: UICollectionViewCell {
     @IBOutlet var mainLabel: UILabel!
     @IBOutlet var subLabel: UILabel!
 
+    private var shimmerViews: [ShimmerView] = []
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureView()
@@ -64,4 +66,18 @@ final class BasicCollectionViewCell: UICollectionViewCell {
         subLabel.text = data.authors.first ?? ""
     }
     
+    func showShimmer() {
+        let viewsToShimmer: [UIView] = [
+            infoImageView, mainImageView, mainLabel, subLabel
+        ]
+        viewsToShimmer.forEach {
+            let shimmer = ShimmerView.apply(to: $0)
+            shimmerViews.append(shimmer)
+        }
+    }
+
+    func hideShimmer() {
+        shimmerViews.forEach { $0.stopShimmering() }
+        shimmerViews.removeAll()
+    }
 }
