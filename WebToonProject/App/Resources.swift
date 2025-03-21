@@ -22,6 +22,8 @@ enum Resources {
         case isEnd = "isEnd"
         case isFree = "isFree"
         case isUpdated = "isUpdated"
+        case starGreen = "star_green"
+        case starGray = "star_gray"
     }
     
     // Keys for localization
