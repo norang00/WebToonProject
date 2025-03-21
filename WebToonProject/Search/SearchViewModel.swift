@@ -10,11 +10,15 @@ import RxSwift
 import RxCocoa
 
 final class SearchViewModel: BaseViewModel {
-    
+
     // for pagination
-    private let page = 1
+    private var currentPage = 1
+    private var hasNextPage = true
+    private var currentKeyword = ""
+    private var resultToShow: [Webtoon] = []
     
-    private let resultList = PublishRelay<[Webtoon]>()
+    let isLoading = BehaviorRelay<Bool>(value: false)
+    let resultList = PublishRelay<[Webtoon]>()
     private let errorMessage = PublishRelay<CustomError>()
 
     private let disposeBag = DisposeBag()
@@ -22,6 +26,7 @@ final class SearchViewModel: BaseViewModel {
     struct Input {
         let searchClicked: ControlEvent<Void>
         let searchText: ControlProperty<String>
+        let reachedBottom: Observable<Void>
     }
     
     struct Output {
@@ -31,17 +36,29 @@ final class SearchViewModel: BaseViewModel {
     
     func transform(_ input: Input) -> Output {
         input.searchClicked
-            .debug("searchClicked")
             .withLatestFrom(input.searchText)
             .distinctUntilChanged()
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
             .bind(with: self) { owner, keyword in
-                let value = keyword.trimmingCharacters(in: .whitespacesAndNewlines)
-                if !value.isEmpty {
-                    print(keyword)
-                    owner.callRequest(keyword)
-                } else {
-                    print("no query")
+                owner.currentKeyword = keyword
+                owner.currentPage = 1
+                owner.resultToShow = []
+                owner.hasNextPage = true
+                owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 5))
+                owner.callRequestToNetworkManager(owner.currentKeyword, owner.currentPage)
+            }
+            .disposed(by: disposeBag)
+        
+        input.reachedBottom
+            .bind(with: self) { owner, _ in
+                if owner.isLoading.value || !owner.hasNextPage {
+                    print("owner.isLoading", owner.isLoading.value)
+                    print("owner.hasNextPage", owner.hasNextPage)
+                    return
                 }
+                owner.currentPage += 1
+                owner.callRequestToNetworkManager(owner.currentKeyword, owner.currentPage)
             }
             .disposed(by: disposeBag)
 
@@ -51,19 +68,20 @@ final class SearchViewModel: BaseViewModel {
         )
     }
     
-    private func callRequest(_ keyword: String) {
-        print(#function, keyword)
-        let api = NetworkRequest.webtoon(keyword: keyword, page: page, sort: nil, isUpdated: nil, isFree: nil, day: nil)
+    private func callRequestToNetworkManager(_ keyword: String, _ page: Int) {
+        isLoading.accept(true)
+        let api = NetworkRequest.searchWebtoon(keyword: keyword, page: currentPage,
+                                               isUpdated: nil, isFree: nil)
         NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
+            guard let self else { return }
+            isLoading.accept(false)
             switch response {
             case .success(let data):
-                self?.resultList.accept(data.webtoons)
-                print("callRequest - parameters", api.parameters)
-                print("callRequest - success", data.webtoons.count)
-                dump(data.webtoons)
+                self.resultToShow.append(contentsOf: data.webtoons)
+                self.resultList.accept(self.resultToShow)
+                self.hasNextPage = !data.isLastPage
             case .failure(let error):
-                print("callRequest - error", error)
-                self?.errorMessage.accept(error)
+                self.errorMessage.accept(error)
             }
         }
     }

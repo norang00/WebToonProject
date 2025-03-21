@@ -25,6 +25,7 @@ enum Day: String {
 
 enum NetworkRequest {
     case webtoon(keyword: String?, page: Int?, sort: Sort?, isUpdated: Bool?, isFree: Bool?, day: Day?)
+    case searchWebtoon(keyword: String?, page: Int?, isUpdated: Bool?, isFree: Bool?)
     
     var webtoonURL: String {
         return API.URL.webtoon.rawValue
@@ -33,6 +34,8 @@ enum NetworkRequest {
     var endpoint: URL {
         switch self {
         case .webtoon:
+            return URL(string: webtoonURL)!
+        case .searchWebtoon:
             return URL(string: webtoonURL)!
         }
     }
@@ -53,6 +56,17 @@ enum NetworkRequest {
                 "isUpdated": isUpdated,
                 "isFree": isFree,
                 "day": day
+            ]
+            return params.compactMapValues { $0 }
+            
+        case .searchWebtoon(keyword: let keyword, page: let page,
+                            isUpdated: let isUpdated, isFree: let isFree):
+            let params: [String: Any?] = [
+                "provider": "NAVER",
+                "keyword": keyword,
+                "page": page,
+                "isUpdated": isUpdated,
+                "isFree": isFree
             ]
             return params.compactMapValues { $0 }
         }

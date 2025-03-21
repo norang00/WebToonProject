@@ -26,3 +26,23 @@ struct Webtoon: Decodable {
     let freeWaitHour: Int?
     let authors: [String]
 }
+
+extension Webtoon {
+    // dummy data for loading shimmer
+    static var shimmer: Webtoon {
+        return Webtoon(
+            id: "shimmer-id",
+            title: "__shimmer__",
+            provider: "placeholder",
+            updateDays: [],
+            url: "",
+            thumbnail: [],
+            isEnd: false,
+            isFree: false,
+            isUpdated: false,
+            ageGrade: 0,
+            freeWaitHour: nil,
+            authors: []
+        )
+    }
+}

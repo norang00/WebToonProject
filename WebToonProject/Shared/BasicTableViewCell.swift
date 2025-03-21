@@ -18,6 +18,8 @@ class BasicTableViewCell: UITableViewCell {
     @IBOutlet var starImageViews: [UIImageView]!
     @IBOutlet var ratingLabel: UILabel!
 
+    private var shimmerViews: [ShimmerView] = []
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configureView()
@@ -61,7 +63,7 @@ class BasicTableViewCell: UITableViewCell {
 
         let dummyRating = Double.random(in: 0...5)
         colorStarImages(dummyRating)
-        ratingLabel.text = String(format: "%.1f", dummyRating)
+        ratingLabel.text = "(\(String(format: "%.1f", dummyRating)))"
     }
     
     private func colorStarImages(_ grade: Double) {
@@ -75,5 +77,20 @@ class BasicTableViewCell: UITableViewCell {
             starImageViews[index].contentMode = .scaleAspectFit
             grade -= 1
         }
+    }
+    
+    func showShimmer() {
+        let viewsToShimmer: [UIView] = [
+            mainImageView, titleLabel, authorLabel, ratingLabel
+        ] + starImageViews
+        viewsToShimmer.forEach {
+            let shimmer = ShimmerView.apply(to: $0)
+            shimmerViews.append(shimmer)
+        }
+    }
+    
+    func hideShimmer() {
+        shimmerViews.forEach { $0.stopShimmering() }
+        shimmerViews.removeAll()
     }
 }
