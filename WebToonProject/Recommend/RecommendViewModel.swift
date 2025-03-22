@@ -10,13 +10,12 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-final class RecommendViewModel: BaseViewModel {
+final class RecommendViewModel: BaseViewModel<Webtoon,
+                                RecommendViewModel.Input,
+                                RecommendViewModel.Output> {
     
-    private let resultList = PublishRelay<[Webtoon]>()
-    private let errorMessage = PublishRelay<CustomError>()
     private let bannerImages = PublishRelay<[UIImage]>()
 
-    private let disposeBag = DisposeBag()
     
     struct Input {
         let viewDidLoadTrigger: PublishRelay<Void>
@@ -29,7 +28,7 @@ final class RecommendViewModel: BaseViewModel {
         let errorMessage: PublishRelay<CustomError>
     }
     
-    func transform(_ input: Input) -> Output {
+    override func transform(_ input: Input) -> Output {
         input.viewDidLoadTrigger
             .bind(with: self) { owner, _ in
                 let shimmer = Webtoon.shimmer

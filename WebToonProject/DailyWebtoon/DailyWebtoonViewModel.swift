@@ -10,19 +10,12 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-final class DailyWebtoonViewModel: BaseViewModel {
-
-    // for pagination
-    private var currentPage = 1
+final class DailyWebtoonViewModel: BaseViewModel<Webtoon,
+                                   DailyWebtoonViewModel.Input,
+                                   DailyWebtoonViewModel.Output> {
+    
     private var currentDay = Resources.WeekDay.today
-    private var hasNextPage = true
-    private var resultToShow: [Webtoon] = []
-
-    let isLoading = BehaviorRelay<Bool>(value: false)
-    let resultList = PublishRelay<[Webtoon]>()
-    private let errorMessage = PublishRelay<CustomError>()
-
-    private let disposeBag = DisposeBag()
+    private var cachedResult: [Resources.WeekDay: [Webtoon]] = [:]
     
     struct Input {
         let viewDidLoadTrigger: PublishRelay<Void>
@@ -35,20 +28,27 @@ final class DailyWebtoonViewModel: BaseViewModel {
         let errorMessage: PublishRelay<CustomError>
     }
     
-    func transform(_ input: Input) -> Output {
+    override func transform(_ input: Input) -> Output {
         input.dayButtonTapped
-            .do(onNext: { [weak self] _ in
-                let shimmer = Webtoon.shimmer
-                self?.resultList.accept(Array(repeating: shimmer, count: 12))
+            .withUnretained(self)
+            .do(onNext: { owner, tappedDay in
+                if let cached = owner.cachedResult[tappedDay] {
+                    owner.resultList.accept(cached)
+                } else {
+                    owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 12))
+                }
             })
-            .bind(with: self) { owner, day in
-                owner.resultToShow = []
-                owner.currentPage = 1
-                owner.currentDay = day
+            .filter { owner, tappedDay in
+                return owner.cachedResult[tappedDay] == nil
+            }
+            .map { $0.1 }
+            .bind(with: self) { owner, tappedDay in
+                owner.resetPagination()
+                owner.currentDay = tappedDay
                 owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
-
+        
         input.viewDidLoadTrigger
             .do(onNext: { [weak self] _ in
                 let shimmer = Webtoon.shimmer
@@ -58,7 +58,7 @@ final class DailyWebtoonViewModel: BaseViewModel {
                 owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
-
+        
         // pagination
         input.reachedBottom
             .bind(with: self) { owner, _ in
@@ -67,7 +67,7 @@ final class DailyWebtoonViewModel: BaseViewModel {
                 owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
-
+        
         return Output(
             resultList: resultList.asDriver(onErrorJustReturn: []),
             errorMessage: errorMessage
@@ -75,9 +75,8 @@ final class DailyWebtoonViewModel: BaseViewModel {
     }
     
     private func callRequestToNetworkManager() {
-        print(#function, currentDay)
         isLoading.accept(true)
-
+        
         let option = WebtoonRequestOption(
             page: currentPage,
             updateDay: currentDay?.code
@@ -87,11 +86,13 @@ final class DailyWebtoonViewModel: BaseViewModel {
         NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
             guard let self else { return }
             isLoading.accept(false)
-
+            
             switch response {
             case .success(let data):
                 self.resultToShow.append(contentsOf: data.webtoons)
+                self.cachedResult[self.currentDay ?? .sun] = self.resultToShow
                 self.resultList.accept(self.resultToShow)
+                self.hasNextPage = !data.isLastPage
             case .failure(let error):
                 self.errorMessage.accept(error)
             }
