@@ -50,7 +50,7 @@ final class DailyWebtoonView: BaseView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let screenWidth = UIScreen.main.bounds.width
-        let verticalInset: CGFloat = 8
+        let verticalInset: CGFloat = 12
         let horizontalInset: CGFloat = 12
         let horizontalSpacing: CGFloat = horizontalInset*2
         let itemSpacing: CGFloat = layout.minimumInteritemSpacing * 2

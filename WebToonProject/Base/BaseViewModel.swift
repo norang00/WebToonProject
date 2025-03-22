@@ -6,11 +6,31 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
-protocol BaseViewModel {
+class BaseViewModel<T, I, O> {
+    typealias Input = I
+    typealias Output = O
     
-    associatedtype Input
-    associatedtype Output
+    // default value for pagination
+    var currentPage = 1
+    var hasNextPage = true
+    var resultToShow: [T] = []
     
-    func transform(_ input: Input) -> Output
+    let isLoading = BehaviorRelay<Bool>(value: false)
+    let resultList = PublishRelay<[T]>()
+    let errorMessage = PublishRelay<CustomError>()
+
+    let disposeBag = DisposeBag()
+
+    func transform(_ input: Input) -> Output {
+        fatalError("Subclasses must override transform(input:)")
+    }
+    
+    func resetPagination() {
+        currentPage = 1
+        hasNextPage = true
+        resultToShow = []
+    }
 }

@@ -9,25 +9,16 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class SearchViewModel: BaseViewModel {
-
+final class SearchViewModel: BaseViewModel<Webtoon, SearchViewModel.Input, SearchViewModel.Output> {
+    
     struct Filter {
         var isFree: Bool?
         var isUpdated: Bool?
     }
     
     // for pagination
-    private var currentPage = 1
-    private var hasNextPage = true
     private var currentKeyword = ""
-    private var resultToShow: [Webtoon] = []
     private var currentSearchOption: Filter? = nil
-    
-    let isLoading = BehaviorRelay<Bool>(value: false)
-    let resultList = PublishRelay<[Webtoon]>()
-    private let errorMessage = PublishRelay<CustomError>()
-
-    private let disposeBag = DisposeBag()
     
     struct Input {
         let searchClicked: ControlEvent<Void>
@@ -42,7 +33,7 @@ final class SearchViewModel: BaseViewModel {
         let errorMessage: PublishRelay<CustomError>
     }
     
-    func transform(_ input: Input) -> Output {
+    override func transform(_ input: Input) -> Output {
         input.searchClicked
             .withLatestFrom(input.searchText)
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -50,9 +41,8 @@ final class SearchViewModel: BaseViewModel {
             .distinctUntilChanged()
             .bind(with: self) { owner, keyword in
                 owner.currentKeyword = keyword
-                owner.currentPage = 1
-                owner.resultToShow = []
-                owner.hasNextPage = true
+                owner.resetPagination()
+                
                 owner.currentSearchOption = nil
                 owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 5))
                 owner.callRequestToNetworkManager()
@@ -61,10 +51,8 @@ final class SearchViewModel: BaseViewModel {
         
         input.filterButtonTapped
             .bind(with: self) { owner, filter in
+                owner.resetPagination()
                 owner.currentKeyword = ""
-                owner.currentPage = 1
-                owner.resultToShow = []
-                owner.hasNextPage = true
                 let option: Filter
                 switch filter {
                 case .isFree:
@@ -80,17 +68,14 @@ final class SearchViewModel: BaseViewModel {
         
         input.authorButtonTapped
             .bind(with: self) { owner, author in
+                owner.resetPagination()
                 owner.currentKeyword = author
-                owner.currentPage = 1
-                owner.resultToShow = []
-                owner.hasNextPage = true
                 owner.currentSearchOption = nil
                 owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 5))
                 owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
         
-        // pagination
         input.reachedBottom
             .bind(with: self) { owner, _ in
                 if owner.isLoading.value || !owner.hasNextPage { return }
@@ -98,7 +83,7 @@ final class SearchViewModel: BaseViewModel {
                 owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
-
+        
         return Output(
             resultList: resultList.asDriver(onErrorJustReturn: []),
             errorMessage: errorMessage
