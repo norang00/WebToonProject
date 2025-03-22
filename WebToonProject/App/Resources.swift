@@ -29,22 +29,54 @@ enum Resources {
     // Keys for localization
     enum Keys: String {
         //general title
-        case recommend = "recommend"
-        case search = "search"
-        case like = "like"
+        case recommend
+        case search
+        case like
+        case daily
         
         //button title
-        case dailyWebtoon = "dailyWebtoon"
+        case dailyWebtoon
         
         //section title
-        case updated = "updated"
-        case searchByFilter = "searchByFilter"
-        case searchByAuthor = "searchByAuthor"
-
-        //searchBar placeholder
-        case placeholder = "placeholder"
+        case updated
+        case searchByFilter
+        case searchByAuthor
         
-        case searchIsFree = "searchIsFree"
-        case searchIsUpdated = "searchIsUpdated"
+        //searchBar placeholder
+        case placeholder
+        
+        case searchIsFree
+        case searchIsUpdated
+        
+        var localized: String {
+            NSLocalizedString(self.rawValue, comment: "")
+        }
+    }
+    
+    enum WeekDay: String, CaseIterable {
+        case mon, tue, wed, thu, fri, sat, sun
+        
+        var localized: String {
+            NSLocalizedString(self.rawValue, comment: "")
+        }
+        
+        var code: String {
+            self.rawValue
+        }
+        
+        static var today: Resources.WeekDay? {
+            let calendar = Calendar.current
+            let weekdayIndex = calendar.component(.weekday, from: Date())
+            let weekdayMap: [Int: Resources.WeekDay] = [
+                1: .sun,
+                2: .mon,
+                3: .tue,
+                4: .wed,
+                5: .thu,
+                6: .fri,
+                7: .sat
+            ]
+            return weekdayMap[weekdayIndex]
+        }
     }
 }

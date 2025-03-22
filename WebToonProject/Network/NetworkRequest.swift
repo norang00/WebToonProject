@@ -13,29 +13,26 @@ enum Sort: String {
     case desc = "DESC"
 }
 
-enum Day: String {
-    case mon = "MON"
-    case tue = "TUE"
-    case wed = "WED"
-    case thu = "THU"
-    case fri = "FRI"
-    case sat = "SAT"
-    case sun = "SUN"
+// Parameter packs for Webtoon Request
+struct WebtoonRequestOption {
+    var keyword: String? = nil
+    var page: Int? = 1
+    var sort: Sort? = nil
+    var isUpdated: Bool? = nil
+    var isFree: Bool? = nil
+    var updateDay: String? = nil
 }
 
 enum NetworkRequest {
-    case webtoon(keyword: String?, page: Int?, sort: Sort?, isUpdated: Bool?, isFree: Bool?, day: Day?)
-    case searchWebtoon(keyword: String?, page: Int?, isUpdated: Bool?, isFree: Bool?)
+    case webtoon(option: WebtoonRequestOption)
     
     var webtoonURL: String {
         return API.URL.webtoon.rawValue
     }
         
-    var endpoint: URL {
+    var endpoint: URL { // 필요없을지도?
         switch self {
         case .webtoon:
-            return URL(string: webtoonURL)!
-        case .searchWebtoon:
             return URL(string: webtoonURL)!
         }
     }
@@ -43,30 +40,19 @@ enum NetworkRequest {
     var method: HTTPMethod {
         return .get
     }
-
+    
     var parameters: Parameters {
         switch self {
-        case .webtoon(let keyword, let page, let sort, let isUpdated, let isFree, let day):
+        case .webtoon(let option):
             let params: [String: Any?] = [
                 "provider": "NAVER",
-                "keyword": keyword,
-                "page": page,
+                "keyword": option.keyword,
+                "page": option.page,
                 "perPage": 30,
-                "sort": sort,
-                "isUpdated": isUpdated,
-                "isFree": isFree,
-                "day": day
-            ]
-            return params.compactMapValues { $0 }
-            
-        case .searchWebtoon(keyword: let keyword, page: let page,
-                            isUpdated: let isUpdated, isFree: let isFree):
-            let params: [String: Any?] = [
-                "provider": "NAVER",
-                "keyword": keyword,
-                "page": page,
-                "isUpdated": isUpdated,
-                "isFree": isFree
+                "sort": option.sort?.rawValue,
+                "isUpdated": option.isUpdated,
+                "isFree": option.isFree,
+                "updateDay": option.updateDay
             ]
             return params.compactMapValues { $0 }
         }

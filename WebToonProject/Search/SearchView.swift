@@ -90,18 +90,18 @@ final class SearchView: BaseView {
         searchBarBackgroundView.layer.cornerRadius = 4
 
         searchBar.tintColor = .black
-        searchBar.placeholder = Resources.Keys.placeholder.rawValue.localized
+        searchBar.placeholder = Resources.Keys.placeholder.localized
         searchBar.backgroundColor = .clear
         searchBar.searchTextField.font = .pretendardBold(ofSize: 16)
         searchBar.searchTextField.backgroundColor = .clear
         searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
 
-        searchByFilterHeader.titleLabel.text = Resources.Keys.searchByFilter.rawValue.localized
+        searchByFilterHeader.titleLabel.text = Resources.Keys.searchByFilter.localized
 
         searchByFilterStackView.axis = .horizontal
         searchByFilterStackView.spacing = 8
         
-        searchByAuthorHeader.titleLabel.text = Resources.Keys.searchByAuthor.rawValue.localized
+        searchByAuthorHeader.titleLabel.text = Resources.Keys.searchByAuthor.localized
  
         searchByAuthorStackView.axis = .horizontal
         searchByAuthorStackView.spacing = 8
@@ -119,8 +119,8 @@ final class SearchView: BaseView {
     
     private func makeFilterButtons() {
         let filterList = [
-            Resources.Keys.searchIsFree.rawValue.localized,
-            Resources.Keys.searchIsUpdated.rawValue.localized
+            Resources.Keys.searchIsFree.localized,
+            Resources.Keys.searchIsUpdated.localized
         ]
         for filter in filterList {
             let button = SearchBadgeButton()

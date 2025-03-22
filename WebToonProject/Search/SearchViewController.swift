@@ -25,7 +25,7 @@ final class SearchViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = Resources.Keys.search.rawValue.localized
+        self.navigationItem.title = Resources.Keys.search.localized
         bind()
     }
     
@@ -122,9 +122,9 @@ enum FilterType {
 
     init?(title: String) {
         switch title {
-        case Resources.Keys.searchIsFree.rawValue.localized:
+        case Resources.Keys.searchIsFree.localized:
             self = .isFree
-        case Resources.Keys.searchIsUpdated.rawValue.localized:
+        case Resources.Keys.searchIsUpdated.localized:
             self = .isUpdated
         default:
             return nil

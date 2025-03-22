@@ -11,17 +11,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BasicCollectionViewCell" id="gTV-IL-0wX" customClass="BasicCollectionViewCell" customModule="WebToonProject" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="123" height="181"/>
+            <rect key="frame" x="0.0" y="0.0" width="114" height="165"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="123" height="181"/>
+                <rect key="frame" x="0.0" y="0.0" width="114" height="165"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DPs-h2-a9n">
-                        <rect key="frame" x="0.0" y="0.0" width="123" height="135.66666666666666"/>
+                        <rect key="frame" x="0.0" y="0.0" width="114" height="123.66666666666667"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahW-la-ORU">
-                        <rect key="frame" x="0.0" y="139.66666666666666" width="123" height="20"/>
+                        <rect key="frame" x="0.0" y="127.66666666666669" width="114" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="bGZ-G1-2aP"/>
                         </constraints>
@@ -37,7 +37,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBt-Eu-Hdf">
-                        <rect key="frame" x="0.0" y="159.66666666666666" width="123" height="16"/>
+                        <rect key="frame" x="0.0" y="147.66666666666666" width="114" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -60,14 +60,14 @@
                 <constraint firstItem="WzA-8T-Gvo" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="xIV-8O-fOp"/>
                 <constraint firstAttribute="trailing" secondItem="zBt-Eu-Hdf" secondAttribute="trailing" id="zYA-Pj-jPZ"/>
             </constraints>
-            <size key="customSize" width="311" height="528"/>
+            <size key="customSize" width="302" height="512"/>
             <connections>
                 <outlet property="infoImageView" destination="WzA-8T-Gvo" id="FUe-pW-1fb"/>
                 <outlet property="mainImageView" destination="DPs-h2-a9n" id="WUz-eC-aUb"/>
                 <outlet property="mainLabel" destination="ahW-la-ORU" id="o5D-bn-QlS"/>
                 <outlet property="subLabel" destination="zBt-Eu-Hdf" id="PF6-Kd-IOt"/>
             </connections>
-            <point key="canvasLocation" x="168.70229007633588" y="11.619718309859156"/>
+            <point key="canvasLocation" x="161.83206106870227" y="5.9859154929577469"/>
         </collectionViewCell>
     </objects>
 </document>
