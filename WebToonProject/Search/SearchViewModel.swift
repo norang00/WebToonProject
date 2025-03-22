@@ -11,7 +11,7 @@ import RxCocoa
 
 final class SearchViewModel: BaseViewModel {
 
-    struct SearchOption {
+    struct Filter {
         var isFree: Bool?
         var isUpdated: Bool?
     }
@@ -21,7 +21,7 @@ final class SearchViewModel: BaseViewModel {
     private var hasNextPage = true
     private var currentKeyword = ""
     private var resultToShow: [Webtoon] = []
-    private var currentSearchOption: SearchOption? = nil
+    private var currentSearchOption: Filter? = nil
     
     let isLoading = BehaviorRelay<Bool>(value: false)
     let resultList = PublishRelay<[Webtoon]>()
@@ -43,7 +43,6 @@ final class SearchViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-        // search clicked
         input.searchClicked
             .withLatestFrom(input.searchText)
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -56,35 +55,30 @@ final class SearchViewModel: BaseViewModel {
                 owner.hasNextPage = true
                 owner.currentSearchOption = nil
                 owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 5))
-                owner.callRequestToNetworkManager(owner.currentKeyword, owner.currentPage)
+                owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
         
-        // filter button tapped
         input.filterButtonTapped
-            .debug("filterButtonTapped")
             .bind(with: self) { owner, filter in
                 owner.currentKeyword = ""
                 owner.currentPage = 1
                 owner.resultToShow = []
                 owner.hasNextPage = true
-                let option: SearchOption
+                let option: Filter
                 switch filter {
                 case .isFree:
-                    option = SearchOption(isFree: true, isUpdated: nil)
+                    option = Filter(isFree: true, isUpdated: nil)
                 case .isUpdated:
-                    option = SearchOption(isFree: nil, isUpdated: true)
+                    option = Filter(isFree: nil, isUpdated: true)
                 }
                 owner.currentSearchOption = option
                 owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 5))
-                owner.callRequestToNetworkManager(owner.currentKeyword, owner.currentPage, option)
+                owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
         
-        
-        // author button tapped
         input.authorButtonTapped
-            .debug("authorButtonTapped")
             .bind(with: self) { owner, author in
                 owner.currentKeyword = author
                 owner.currentPage = 1
@@ -92,7 +86,7 @@ final class SearchViewModel: BaseViewModel {
                 owner.hasNextPage = true
                 owner.currentSearchOption = nil
                 owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 5))
-                owner.callRequestToNetworkManager(author, owner.currentPage)
+                owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
         
@@ -101,7 +95,7 @@ final class SearchViewModel: BaseViewModel {
             .bind(with: self) { owner, _ in
                 if owner.isLoading.value || !owner.hasNextPage { return }
                 owner.currentPage += 1
-                owner.callRequestToNetworkManager(owner.currentKeyword, owner.currentPage, owner.currentSearchOption)
+                owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
 
@@ -111,16 +105,17 @@ final class SearchViewModel: BaseViewModel {
         )
     }
     
-    private func callRequestToNetworkManager(_ keyword: String, _ page: Int, _ option: SearchOption? = nil) {
+    private func callRequestToNetworkManager() {
         isLoading.accept(true)
-
-        let api = NetworkRequest.searchWebtoon(
-            keyword: keyword,
+        
+        let option = WebtoonRequestOption(
+            keyword: currentKeyword,
             page: currentPage,
-            isUpdated: option?.isUpdated,
-            isFree: option?.isFree
+            isUpdated: currentSearchOption?.isUpdated,
+            isFree: currentSearchOption?.isFree
         )
-
+        let api = NetworkRequest.webtoon(option: option)
+        
         NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
             guard let self else { return }
             isLoading.accept(false)

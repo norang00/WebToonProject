@@ -34,7 +34,7 @@ final class RecommendViewModel: BaseViewModel {
             .bind(with: self) { owner, _ in
                 let shimmer = Webtoon.shimmer
                 owner.resultList.accept(Array(repeating: shimmer, count: 6))
-                owner.callRequest()
+                owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
 
@@ -53,8 +53,9 @@ final class RecommendViewModel: BaseViewModel {
         )
     }
     
-    private func callRequest() {
-        let api = NetworkRequest.webtoon(keyword: nil, page: 1, sort: nil, isUpdated: true, isFree: nil, day: nil)
+    private func callRequestToNetworkManager() {
+        let option = WebtoonRequestOption(isUpdated: true)
+        let api = NetworkRequest.webtoon(option: option)
         NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
             switch response {
             case .success(let data):

@@ -70,11 +70,13 @@ final class RecommendView: BaseView {
         
         scrollView.showsVerticalScrollIndicator = false
         
-        dailyButton.setTitle(Resources.Keys.dailyWebtoon.rawValue.localized, for: .normal)
+        dailyButton.setTitle(Resources.Keys.dailyWebtoon.localized, for: .normal)
         dailyButton.titleLabel?.font = .pretendardBold(ofSize: 18)
         dailyButton.backgroundColor = .accent
         
-        sectionHeaderView.titleLabel.text = Resources.Keys.updated.rawValue.localized
+        sectionHeaderView.titleLabel.text = Resources.Keys.updated.localized
+        collectionView.register(UINib(nibName: BasicCollectionViewCell.identifier, bundle: nil),
+                                              forCellWithReuseIdentifier: BasicCollectionViewCell.identifier)
         collectionView.isScrollEnabled = false
     }
     
@@ -89,7 +91,7 @@ final class RecommendView: BaseView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let screenWidth = UIScreen.main.bounds.width
-        let verticalInset: CGFloat = 8
+        let verticalInset: CGFloat = 4
         let horizontalInset: CGFloat = 12
         let horizontalSpacing: CGFloat = horizontalInset*2
         let itemSpacing: CGFloat = layout.minimumInteritemSpacing * 2
@@ -98,7 +100,7 @@ final class RecommendView: BaseView {
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
         layout.sectionInset = .init(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
         layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
+        layout.minimumLineSpacing = 4
         return layout
     }
 }

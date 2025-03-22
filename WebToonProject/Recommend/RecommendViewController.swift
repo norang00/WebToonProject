@@ -24,8 +24,7 @@ final class RecommendViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = Resources.Keys.recommend.rawValue.localized
-        configureCollectionView()
+        self.navigationItem.title = Resources.Keys.recommend.localized
         
         bind()
         viewDidLoadTrigger.accept(())
@@ -56,19 +55,15 @@ final class RecommendViewController: BaseViewController {
                 self?.recommendView.bannerView.setImages(images)
             })
             .disposed(by: disposeBag)
+        
+        recommendView.dailyButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = DailyWebtoonViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
     }
 }
 // MARK: - DailyButton
 extension RecommendViewController {
     
-}
-
-// MARK: - CollectionView
-extension RecommendViewController {
-    
-    private func configureCollectionView() {
-        recommendView.collectionView.register(UINib(nibName: BasicCollectionViewCell.identifier, bundle: nil),
-                                              forCellWithReuseIdentifier: BasicCollectionViewCell.identifier)
-
-    }
 }
