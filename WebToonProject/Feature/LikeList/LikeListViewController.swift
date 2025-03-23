@@ -44,31 +44,6 @@ final class LikeListViewController: BaseViewController {
         )
         let output = viewModel.transform(input)
 
-        output.resultList
-            .drive(likeListView.tableView.rx.items(
-                cellIdentifier: BasicTableViewCell.identifier,
-                cellType: BasicTableViewCell.self
-            )) { _, item, cell in
-                let webtoon = Webtoon(
-                    id: item.id,
-                    title: item.title,
-                    provider: "",
-                    updateDays: [],
-                    url: item.url,
-                    thumbnail: [item.thumbnail],
-                    isEnd: item.isEnd,
-                    isFree: false,
-                    isUpdated: false,
-                    ageGrade: 0,
-                    freeWaitHour: 0,
-                    authors: item.authors.components(separatedBy: ", ")
-                )
-                cell.configureData(webtoon)
-                cell.starImageViews.forEach { $0.isHidden = true }
-                cell.ratingLabel.isHidden = true
-            }
-            .disposed(by: disposeBag)
-
         output.countText
             .drive(likeListView.countLabel.rx.text)
             .disposed(by: disposeBag)
@@ -76,6 +51,24 @@ final class LikeListViewController: BaseViewController {
         output.sortTitle
             .drive(likeListView.sortButton.rx.title(for: .normal))
             .disposed(by: disposeBag)
+        
+        output.resultList
+            .drive(likeListView.tableView.rx.items(
+                cellIdentifier: BasicTableViewCell.identifier,
+                cellType: BasicTableViewCell.self)) { index, item, cell in
+                    cell.configureData(item)
+                }
+            .disposed(by: disposeBag)
+
+        likeListView.tableView.rx.modelSelected(Webtoon.self)
+            .bind(with: self) { owner, item in
+                let nextVC = ImageViewerViewController()
+                nextVC.webtoon = item
+                owner.navigationController?.pushViewController(nextVC, animated: true)
+            }
+            .disposed(by: disposeBag)
+
+       
     }
 }
 //

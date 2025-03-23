@@ -112,6 +112,15 @@ final class SearchViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        searchView.tableView.rx.modelSelected(Webtoon.self)
+            .bind(with: self) { owner, item in
+                let nextVC = ImageViewerViewController()
+                nextVC.webtoon = item
+                print("recommendView.collectionView.rx.modelSelected", item.title)
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
 }

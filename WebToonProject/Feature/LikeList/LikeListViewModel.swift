@@ -12,8 +12,6 @@ import RealmSwift
 
 final class LikeListViewModel: BaseViewModel<LikedWebtoon, LikeListViewModel.Input, LikeListViewModel.Output> {
 
-    private let realm = try! Realm()
-    
     enum SortType {
         case title, regDate
     }
@@ -24,60 +22,77 @@ final class LikeListViewModel: BaseViewModel<LikedWebtoon, LikeListViewModel.Inp
     }
 
     struct Output {
-        let resultList: Driver<[LikedWebtoon]>
+        let resultList: Driver<[Webtoon]>
         let countText: Driver<String>
         let sortTitle: Driver<String>
     }
 
+    // MARK: - Properties
+    private let realm = try! Realm()
     private var currentSort: SortType = .regDate
 
-    override func transform(_ input: Input) -> Output {
-        let resultRelay = BehaviorRelay<[LikedWebtoon]>(value: [])
+    private let resultRelay = BehaviorRelay<[Webtoon]>(value: [])
+    private let sortTitleRelay = BehaviorRelay<String>(value: "등록순")
 
-        let sortTitleRelay = BehaviorRelay<String>(value: currentSort == .title ? "제목순" : "등록순")
+    private var currentSortTitle: String {
+        currentSort == .title ? Resources.Keys.sortByTitle.localized : Resources.Keys.sortByReg.localized
+    }
+
+    // MARK: - Transform
+    override func transform(_ input: Input) -> Output {
 
         input.viewWillAppear
-            .subscribe(with: self) { owner, _ in owner.fetchSorted() }
-            .disposed(by: disposeBag)
-
-        input.sortButtonTapped
-            .subscribe(with: self) { owner, _ in
-                owner.toggleSort()
-                sortTitleRelay.accept(owner.currentSortTitle())
+            .bind(with: self) { owner, _ in
                 owner.fetchSorted()
             }
             .disposed(by: disposeBag)
 
-        resultList
-            .bind(to: resultRelay)
+        input.sortButtonTapped
+            .bind(with: self) { owner, _ in
+                owner.toggleSort()
+                owner.fetchSorted()
+            }
             .disposed(by: disposeBag)
 
         let countText = resultRelay
             .map { "\($0.count) " + Resources.Keys.howMany.localized }
-            .asDriver(onErrorJustReturn: "")
-
+            
         return Output(
             resultList: resultRelay.asDriver(onErrorJustReturn: []),
-            countText: countText,
+            countText: countText.asDriver(onErrorJustReturn: ""),
             sortTitle: sortTitleRelay.asDriver(onErrorJustReturn: "")
         )
     }
 
+    // MARK: - Helpers
     private func toggleSort() {
         currentSort = (currentSort == .title) ? .regDate : .title
-    }
-
-    private func currentSortTitle() -> String {
-        currentSort == .title ? "제목순" : "등록순"
+        sortTitleRelay.accept(currentSortTitle)
     }
 
     private func fetchSorted() {
-        let results = realm.objects(LikedWebtoon.self)
-        let sorted = currentSort == .title
-            ? results.sorted(byKeyPath: "title")
-            : results.sorted(byKeyPath: "regDate", ascending: false)
+        let liked = realm.objects(LikedWebtoon.self)
+        let sorted = (currentSort == .title)
+            ? liked.sorted(byKeyPath: "title")
+            : liked.sorted(byKeyPath: "regDate", ascending: false)
 
-        resultToShow = Array(sorted)
-        resultList.accept(resultToShow)
+        let converted = sorted.map {
+            Webtoon(
+                id: $0.id,
+                title: $0.title,
+                provider: "NAVER",
+                updateDays: [],
+                url: $0.url,
+                thumbnail: [$0.thumbnail],
+                isEnd: $0.isEnd,
+                isFree: $0.isFree,
+                isUpdated: $0.isUpdated,
+                ageGrade: 0,
+                freeWaitHour: 0,
+                authors: $0.authors.components(separatedBy: ", ")
+            )
+        }
+
+        resultRelay.accept(Array(converted))
     }
 }
