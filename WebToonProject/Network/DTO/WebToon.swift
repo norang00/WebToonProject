@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - WebToonData
-struct WebToonData: Decodable {
+// MARK: - WebtoonData
+struct WebtoonData: Decodable {
     let webtoons: [Webtoon]
     let total: Int
     let isLastPage: Bool
