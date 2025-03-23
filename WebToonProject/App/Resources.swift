@@ -5,25 +5,38 @@
 //  Created by Kyuhee hong on 3/19/25.
 //
 
-import Foundation
+import UIKit
 
 enum Resources {
     enum SystemImage: String {
         case back = "arrow.left"
         case search = "magnifyingglass"
+        case share = "square.and.arrow.up"
         case recommend = "star"
         case like = "heart.fill"
         case unlike = "heart"
         case chevronRight = "chevron.right"
+        case chevronLeft = "chevron.left"
+        case upDownArrow = "arrow.up.and.down.square"
+        case leftRightArrow = "arrow.left.and.right.square"
+        
+        var image: UIImage? {
+            let buttonConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
+            return UIImage(systemName: self.rawValue)?.withConfiguration(buttonConfig)
+        }
     }
     
     enum CustomImage: String {
-        case basic = "basicImage"
+        case placeholder = "basicImage"
         case isEnd = "isEnd"
         case isFree = "isFree"
         case isUpdated = "isUpdated"
         case starGreen = "star_green"
         case starGray = "star_gray"
+        
+        var image: UIImage? {
+            UIImage(named: self.rawValue)
+        }
     }
     
     // Keys for localization

@@ -61,9 +61,15 @@ final class RecommendViewController: BaseViewController {
                 let vc = DailyWebtoonViewController()
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
+            .disposed(by: disposeBag)
+
+        recommendView.collectionView.rx.modelSelected(Webtoon.self)
+            .bind(with: self) { owner, item in
+                let nextVC = ImageViewerViewController()
+                nextVC.imageKeyword = item.title
+                print("recommendView.collectionView.rx.modelSelected", item.title)
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
-}
-// MARK: - DailyButton
-extension RecommendViewController {
-    
 }

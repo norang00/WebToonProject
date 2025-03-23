@@ -14,11 +14,21 @@ final class NetworkManager {
     static let shared = NetworkManager()
     
     private init() { }
+   
+    func testCallRequestToAPIServer<T: Decodable>(_ api: NetworkRequest,
+                                                  _ type: T.Type,
+                                completionHandler: @escaping (Result<T, CustomError>) -> Void) {
+        AF.request(api.endpoint, method: api.method, parameters: api.parameters, headers: api.headers)
+            .validate(statusCode: 200..<500)
+            .responseString { response in
+                dump(response)
+            }
+    }
     
     func callRequestToAPIServer<T: Decodable>(_ api: NetworkRequest,
                                               _ type: T.Type,
                                 completionHandler: @escaping (Result<T, CustomError>) -> Void) {
-        AF.request(api.endpoint, method: api.method, parameters: api.parameters)
+        AF.request(api.endpoint, method: api.method, parameters: api.parameters, headers: api.headers)
             .validate(statusCode: 200..<500)
             .responseDecodable(of: T.self) { [weak self] response in
                 switch response.result {

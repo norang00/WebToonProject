@@ -13,7 +13,7 @@ enum Sort: String {
     case desc = "DESC"
 }
 
-// Parameter packs for Webtoon Request
+// Parameter pack for Webtoon Request
 struct WebtoonRequestOption {
     var keyword: String? = nil
     var page: Int? = 1
@@ -23,24 +23,49 @@ struct WebtoonRequestOption {
     var updateDay: String? = nil
 }
 
+// Parameter pack for Naver Image Request
+struct ImageRequestOption {
+    var keyword: String? = nil
+    var display: Int? = 10
+}
+
 enum NetworkRequest {
     case webtoon(option: WebtoonRequestOption)
+    case image(option: ImageRequestOption)
     
     var webtoonURL: String {
         return API.URL.webtoon.rawValue
     }
+    
+    var imageURL: String {
+        return API.URL.image.rawValue
+    }
         
-    var endpoint: URL { // 필요없을지도?
+    var endpoint: URL {
         switch self {
         case .webtoon:
             return URL(string: webtoonURL)!
+        case .image(option: let option):
+            return URL(string: imageURL)!
         }
     }
     
     var method: HTTPMethod {
         return .get
     }
-    
+
+    var headers: HTTPHeaders {
+        switch self {
+        case .webtoon:
+            return []
+        case .image:
+            return [
+                "X-Naver-Client-Id" : API.Key.naverClient,
+                "X-Naver-Client-Secret" : API.Key.naverSecret
+            ]
+        }
+    }
+
     var parameters: Parameters {
         switch self {
         case .webtoon(let option):
@@ -53,6 +78,12 @@ enum NetworkRequest {
                 "isUpdated": option.isUpdated,
                 "isFree": option.isFree,
                 "updateDay": option.updateDay
+            ]
+            return params.compactMapValues { $0 }
+        case .image(option: let option):
+            let params: [String: Any?] = [
+                "query": option.keyword,
+                "display": option.display
             ]
             return params.compactMapValues { $0 }
         }

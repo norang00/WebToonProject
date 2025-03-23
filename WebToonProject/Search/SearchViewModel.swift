@@ -101,7 +101,7 @@ final class SearchViewModel: BaseViewModel<Webtoon, SearchViewModel.Input, Searc
         )
         let api = NetworkRequest.webtoon(option: option)
         
-        NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
+        NetworkManager.shared.callRequestToAPIServer(api, WebtoonData.self) { [weak self] response in
             guard let self else { return }
             isLoading.accept(false)
             

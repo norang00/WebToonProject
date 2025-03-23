@@ -55,7 +55,7 @@ final class RecommendViewModel: BaseViewModel<Webtoon,
     private func callRequestToNetworkManager() {
         let option = WebtoonRequestOption(isUpdated: true)
         let api = NetworkRequest.webtoon(option: option)
-        NetworkManager.shared.callRequestToAPIServer(api, WebToonData.self) { [weak self] response in
+        NetworkManager.shared.callRequestToAPIServer(api, WebtoonData.self) { [weak self] response in
             switch response {
             case .success(let data):
                 self?.resultList.accept(data.webtoons.shuffled())
@@ -70,12 +70,11 @@ final class RecommendViewModel: BaseViewModel<Webtoon,
 extension RecommendViewModel {
     
     private func fetchBannerImages() -> Observable<[UIImage]> {
-        print(#function)
         // CDN 에서 URL 로 이미지 받아오는 환경을 가정
         let imageURLs = [
-            "https://cdn-manga-stf-router-api.line-scdn.net/top_banner/RbHgV4TPYS8hIkeoP8Sy44Fu.png",
+            "https://cdn-manga-stf-router-api.line-scdn.net/indies_top_banner/qvjneBj6CbSx1IfOT8I8NZGp.png",
             "https://cdn-manga-stf-router-api.line-scdn.net/indies_top_banner/UeInm0TPQlbo3JTBrqF2eRhu.png",
-            "https://cdn-manga-stf-router-api.line-scdn.net/indies_top_banner/qvjneBj6CbSx1IfOT8I8NZGp.png"
+            "https://cdn-manga-stf-router-api.line-scdn.net/top_banner/RbHgV4TPYS8hIkeoP8Sy44Fu.png"
         ]
         
         // [CHECK]
@@ -95,7 +94,6 @@ extension RecommendViewModel {
                         case .success(let value):
                             syncQueue.sync {
                                 images.append(value.image)
-                                print("images", images)
                             }
                         case .failure(let error):
                             print("failed to load image: \(error.localizedDescription)")
