@@ -66,7 +66,7 @@ final class RecommendViewController: BaseViewController {
         recommendView.collectionView.rx.modelSelected(Webtoon.self)
             .bind(with: self) { owner, item in
                 let nextVC = ImageViewerViewController()
-                nextVC.imageKeyword = item.title
+                nextVC.webtoon = item
                 print("recommendView.collectionView.rx.modelSelected", item.title)
                 self.navigationController?.pushViewController(nextVC, animated: true)
             }

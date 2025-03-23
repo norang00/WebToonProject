@@ -61,6 +61,10 @@ enum Resources {
         case searchIsFree
         case searchIsUpdated
         
+        //like Status
+        case likedMessage
+        case unlikedMessage
+        
         var localized: String {
             NSLocalizedString(self.rawValue, comment: "")
         }
