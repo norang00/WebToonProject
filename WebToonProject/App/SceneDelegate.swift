@@ -50,10 +50,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     static func createMainTabBarController() -> UITabBarController {
         let recommendVC = UINavigationController(rootViewController: RecommendViewController())
         let searchVC = UINavigationController(rootViewController: SearchViewController())
-        let likeVC = UINavigationController(rootViewController: LikeViewController())
+        let likeVC = UINavigationController(rootViewController: LikeListViewController())
 
         let tabBarController = UITabBarController()
         tabBarController.tabBar.tintColor = .black
+        tabBarController.tabBar.backgroundColor = .white
         tabBarController.setViewControllers([recommendVC, searchVC, likeVC], animated: true)
         tabBarController.tabBar.items![0].title = Resources.Keys.recommend.localized
         tabBarController.tabBar.items![0].image = UIImage(systemName: Resources.SystemImage.recommend.rawValue)
