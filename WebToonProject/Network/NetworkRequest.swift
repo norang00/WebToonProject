@@ -34,18 +34,18 @@ enum NetworkRequest {
     case image(option: ImageRequestOption)
     
     var webtoonURL: String {
-        return API.URL.webtoon.rawValue
+        return API.URL.webtoon
     }
     
     var imageURL: String {
-        return API.URL.image.rawValue
+        return API.URL.image
     }
         
     var endpoint: URL {
         switch self {
         case .webtoon:
             return URL(string: webtoonURL)!
-        case .image(option: let option):
+        case .image:
             return URL(string: imageURL)!
         }
     }

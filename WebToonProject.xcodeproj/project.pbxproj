@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE4AFA282D8FE9ED003C57F6 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EE4AFA272D8FE9ED003C57F6 /* RealmSwift */; };
+		EE4AFA292D8FE9F6003C57F6 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = EE4AFA272D8FE9ED003C57F6 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		EE4DD3662D8D8BA800A6586A /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = EE4DD3652D8D8BA800A6586A /* RxGesture */; };
 		EEEDAB402D8AB40B00FFDF94 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = EEEDAB3F2D8AB40B00FFDF94 /* .gitignore */; };
 		EEEDAB5A2D8AB80900FFDF94 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EEEDAB592D8AB80900FFDF94 /* SnapKit */; };
@@ -16,6 +18,20 @@
 		EEEDAC2F2D8ADD5F00FFDF94 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = EEEDAC2E2D8ADD5F00FFDF94 /* RxCocoa */; };
 		EEEDAC312D8ADD5F00FFDF94 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EEEDAC302D8ADD5F00FFDF94 /* RxSwift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EE4AFA212D8FE3B2003C57F6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EE4AFA292D8FE9F6003C57F6 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		EEEDAAC22D8AAAB000FFDF94 /* WebToonProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebToonProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE4AFA282D8FE9ED003C57F6 /* RealmSwift in Frameworks */,
 				EEEDAC312D8ADD5F00FFDF94 /* RxSwift in Frameworks */,
 				EEEDAC2C2D8ADD4A00FFDF94 /* Kingfisher in Frameworks */,
 				EEEDAB602D8AB85500FFDF94 /* Toast in Frameworks */,
@@ -88,6 +105,7 @@
 				EEEDAABE2D8AAAB000FFDF94 /* Sources */,
 				EEEDAABF2D8AAAB000FFDF94 /* Frameworks */,
 				EEEDAAC02D8AAAB000FFDF94 /* Resources */,
+				EE4AFA212D8FE3B2003C57F6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -105,6 +123,7 @@
 				EEEDAC2E2D8ADD5F00FFDF94 /* RxCocoa */,
 				EEEDAC302D8ADD5F00FFDF94 /* RxSwift */,
 				EE4DD3652D8D8BA800A6586A /* RxGesture */,
+				EE4AFA272D8FE9ED003C57F6 /* RealmSwift */,
 			);
 			productName = WebToonProject;
 			productReference = EEEDAAC22D8AAAB000FFDF94 /* WebToonProject.app */;
@@ -143,6 +162,7 @@
 				EEEDAC2A2D8ADD4A00FFDF94 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				EEEDAC2D2D8ADD5F00FFDF94 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				EE4DD3642D8D8BA800A6586A /* XCRemoteSwiftPackageReference "RxGesture" */,
+				EE4AFA262D8FE9ED003C57F6 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EEEDAAC32D8AAAB000FFDF94 /* Products */;
@@ -385,6 +405,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		EE4AFA262D8FE9ED003C57F6 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 20.0.1;
+			};
+		};
 		EE4DD3642D8D8BA800A6586A /* XCRemoteSwiftPackageReference "RxGesture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture";
@@ -436,6 +464,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EE4AFA272D8FE9ED003C57F6 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE4AFA262D8FE9ED003C57F6 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		EE4DD3652D8D8BA800A6586A /* RxGesture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EE4DD3642D8D8BA800A6586A /* XCRemoteSwiftPackageReference "RxGesture" */;

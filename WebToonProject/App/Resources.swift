@@ -58,8 +58,18 @@ enum Resources {
         //searchBar placeholder
         case placeholder
         
+        //searchFilter
         case searchIsFree
         case searchIsUpdated
+        
+        //like Status
+        case likedMessage
+        case unlikedMessage
+        
+        //likedList
+        case howMany
+        case sortByReg
+        case sortByTitle
         
         var localized: String {
             NSLocalizedString(self.rawValue, comment: "")

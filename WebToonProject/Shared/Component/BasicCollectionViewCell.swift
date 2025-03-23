@@ -64,7 +64,7 @@ final class BasicCollectionViewCell: UICollectionViewCell {
         
         mainLabel.text = data.title
         
-        subLabel.text = data.authors.first ?? ""
+        subLabel.text = data.authors.joined(separator: ", ")
     }
     
     func showShimmer() {

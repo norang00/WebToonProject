@@ -47,10 +47,11 @@ class BasicTableViewCell: UITableViewCell {
     }
     
     func configureData(_ data: Webtoon) {
-        let image: UIImage? = data.isUpdated ? UIImage(named: Resources.CustomImage.isUpdated.rawValue)
+        let image: UIImage? =
+        data.isUpdated ? UIImage(named: Resources.CustomImage.isUpdated.rawValue)
         : data.isEnd ? UIImage(named: Resources.CustomImage.isEnd.rawValue)
-                            : data.isFree ? UIImage(named: Resources.CustomImage.isFree.rawValue)
-                            : nil
+        : data.isFree ? UIImage(named: Resources.CustomImage.isFree.rawValue)
+        : nil
         infoImageView.image = image
         
         guard let thumbnailString = data.thumbnail.first,

@@ -73,6 +73,15 @@ final class DailyWebtoonViewController: BaseViewController {
                     }
                 }
                 .disposed(by: disposeBag)
+        
+        dailyWebtoonView.collectionView.rx.modelSelected(Webtoon.self)
+            .bind(with: self) { owner, item in
+                let nextVC = ImageViewerViewController()
+                nextVC.webtoon = item
+                print("recommendView.collectionView.rx.modelSelected", item.title)
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
 }
