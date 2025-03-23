@@ -13,9 +13,7 @@ final class SearchViewController: BaseViewController {
     
     private let searchView = SearchView()
     private let searchViewModel = SearchViewModel()
-    
-    private let disposeBag = DisposeBag()
-    
+        
     private var selectedFilterButton: UIButton?
     private var selectedAuthorButton: UIButton?
     
@@ -26,6 +24,7 @@ final class SearchViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = Resources.Keys.search.localized
+
         bind()
     }
     
@@ -117,7 +116,6 @@ final class SearchViewController: BaseViewController {
             .bind(with: self) { owner, item in
                 let nextVC = ImageViewerViewController()
                 nextVC.webtoon = item
-                print("recommendView.collectionView.rx.modelSelected", item.title)
                 self.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: disposeBag)

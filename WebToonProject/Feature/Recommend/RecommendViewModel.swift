@@ -16,7 +16,6 @@ final class RecommendViewModel: BaseViewModel<Webtoon,
     
     private let bannerImages = PublishRelay<[UIImage]>()
 
-    
     struct Input {
         let viewDidLoadTrigger: PublishRelay<Void>
         let fetchBannerImagesTrigger: PublishRelay<Void>

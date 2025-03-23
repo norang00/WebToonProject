@@ -16,35 +16,35 @@ final class ImageViewerView: BaseView {
     let backButton = UIButton()
     let titleLabel = UILabel()
     let shareButton = UIButton()
-    
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        return UICollectionView(frame: .zero, collectionViewLayout: layout)
-    }()
-    
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     let bottomBarView = UIView()
     let likeButton = UIButton()
     let viewerToggleButton = UIButton()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        
-        let screenWidth = UIScreen.main.bounds.width
-        let totalHeight = bounds.height
-        
-        let topBarHeight: CGFloat = topBarView.frame.height
-        let bottomBarHeight: CGFloat = bottomBarView.frame.height
-        
-        let itemHeight = totalHeight - topBarHeight - bottomBarHeight
-        
-        layout.itemSize = CGSize(width: screenWidth, height: itemHeight)
-        layout.invalidateLayout()
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        return layout
     }
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        
+//        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+//        
+//        let screenWidth = UIScreen.main.bounds.width
+//        let totalHeight = bounds.height
+//        
+//        let topBarHeight: CGFloat = topBarView.frame.height
+//        let bottomBarHeight: CGFloat = bottomBarView.frame.height
+//        
+//        let itemHeight = totalHeight - topBarHeight - bottomBarHeight
+//        
+//        layout.itemSize = CGSize(width: screenWidth, height: itemHeight)
+//        layout.invalidateLayout()
+//    }
     
     // MARK: - Hierarchy
     override func configureHierarchy() {
@@ -108,14 +108,15 @@ final class ImageViewerView: BaseView {
         backgroundColor = .black
         
         topBarView.backgroundColor = .black
+        
         backButton.setImage(Resources.SystemImage.chevronLeft.image, for: .normal)
-        titleLabel.text = "제목"
         titleLabel.font = .pretendardBold(ofSize: 16)
         titleLabel.textColor = .white
         shareButton.setImage(Resources.SystemImage.share.image, for: .normal)
                 
-        collectionView.isPagingEnabled = true
         collectionView.backgroundColor = .black
+
+        collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(
@@ -124,6 +125,7 @@ final class ImageViewerView: BaseView {
         )
         
         bottomBarView.backgroundColor = .black
+        
         [likeButton, viewerToggleButton].forEach {
             $0.setTitleColor(.white, for: .normal)
             $0.tintColor = .white

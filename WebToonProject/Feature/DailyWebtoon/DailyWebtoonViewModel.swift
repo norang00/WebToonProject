@@ -19,7 +19,7 @@ final class DailyWebtoonViewModel: BaseViewModel<Webtoon,
     
     struct Input {
         let viewDidLoadTrigger: PublishRelay<Void>
-        let dayButtonTapped: Observable<Resources.WeekDay>
+        let dailyButtonTapped: Observable<Resources.WeekDay>
         let reachedBottom: Observable<Void>
     }
     
@@ -29,7 +29,7 @@ final class DailyWebtoonViewModel: BaseViewModel<Webtoon,
     }
     
     override func transform(_ input: Input) -> Output {
-        input.dayButtonTapped
+        input.dailyButtonTapped
             .withUnretained(self)
             .do(onNext: { owner, tappedDay in
                 if let cached = owner.cachedResult[tappedDay] {

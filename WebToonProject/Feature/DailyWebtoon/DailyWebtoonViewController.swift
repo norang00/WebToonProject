@@ -16,8 +16,6 @@ final class DailyWebtoonViewController: BaseViewController {
     
     private let viewDidLoadTrigger = PublishRelay<Void>()
 
-    private let disposeBag = DisposeBag()
-
     override func loadView() {
         view = dailyWebtoonView
     }
@@ -25,16 +23,14 @@ final class DailyWebtoonViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = Resources.Keys.daily.localized
+        setToday()
         
         bind()
         viewDidLoadTrigger.accept(())
-        if let today = Resources.WeekDay.today {
-            dailyWebtoonView.selectButton(for: today) // 버튼 선택 상태 반영
-        }
     }
 
     private func bind() {
-        let dayButtonTapped = Observable.merge(
+        let dailyButtonTapped = Observable.merge(
             dailyWebtoonView.weekdayButtons.map { pair in
                 pair.button.rx.tap
                     .map { pair.day }
@@ -47,7 +43,8 @@ final class DailyWebtoonViewController: BaseViewController {
         let reachedBottomTrigger = dailyWebtoonView.collectionView.rx.prefetchItems
             .map { $0.map { $0.row }.max() ?? 0 }
             .distinctUntilChanged()
-            .withLatestFrom(dailyWebtoonViewModel.resultList.asObservable()) { index, items in (index, items.count)
+            .withLatestFrom(dailyWebtoonViewModel.resultList.asObservable()) { index, items in
+                (index, items.count)
             }
             .filter { index, count in
                 return index >= count - 2
@@ -56,7 +53,7 @@ final class DailyWebtoonViewController: BaseViewController {
         
         let input = DailyWebtoonViewModel.Input(
             viewDidLoadTrigger: viewDidLoadTrigger,
-            dayButtonTapped: dayButtonTapped,
+            dailyButtonTapped: dailyButtonTapped,
             reachedBottom: reachedBottomTrigger
         )
         let output = dailyWebtoonViewModel.transform(input)
@@ -78,10 +75,14 @@ final class DailyWebtoonViewController: BaseViewController {
             .bind(with: self) { owner, item in
                 let nextVC = ImageViewerViewController()
                 nextVC.webtoon = item
-                print("recommendView.collectionView.rx.modelSelected", item.title)
                 self.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
     }
 
+    private func setToday() {
+        if let today = Resources.WeekDay.today {
+            dailyWebtoonView.selectButton(for: today)
+        }
+    }
 }

@@ -9,8 +9,10 @@ import UIKit
 import SnapKit
 
 final class RecommendView: BaseView {
+    
     private var collectionViewHeightConstraint: Constraint?
 
+    // MARK: - UI Components
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
@@ -18,7 +20,33 @@ final class RecommendView: BaseView {
     let dailyButton = UIButton()
     let sectionHeaderView = SectionHeaderView()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
-    
+
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let screenWidth = UIScreen.main.bounds.width
+        let verticalInset: CGFloat = 4
+        let horizontalInset: CGFloat = 12
+        let horizontalSpacing: CGFloat = horizontalInset*2
+        let itemSpacing: CGFloat = layout.minimumInteritemSpacing * 2
+        let itemWidth: CGFloat = (screenWidth - itemSpacing - horizontalSpacing) / 3
+        let itemHeight: CGFloat = itemWidth * 1.8
+        layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+        layout.sectionInset = .init(top: verticalInset, left: horizontalInset,
+                                    bottom: verticalInset, right: horizontalInset)
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 4
+        
+        return layout
+    }
+        
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        collectionView.layoutIfNeeded()
+        let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
+        collectionViewHeightConstraint?.update(offset: contentHeight)
+    }
+
+    // MARK: - Hierarchy
     override func configureHierarchy() {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -28,7 +56,8 @@ final class RecommendView: BaseView {
         contentView.addSubview(sectionHeaderView)
         contentView.addSubview(collectionView)
     }
-    
+
+    // MARK: - Layout
     override func configureLayout() {
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -65,6 +94,7 @@ final class RecommendView: BaseView {
         }
     }
     
+    // MARK: - Styling
     override func configureView() {
         super.configureView()
         
@@ -78,29 +108,5 @@ final class RecommendView: BaseView {
         collectionView.register(UINib(nibName: BasicCollectionViewCell.identifier, bundle: nil),
                                               forCellWithReuseIdentifier: BasicCollectionViewCell.identifier)
         collectionView.isScrollEnabled = false
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // 컬렉션뷰 레이아웃 업데이트 후 콘텐츠 사이즈 계산
-        collectionView.layoutIfNeeded()
-        let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
-        collectionViewHeightConstraint?.update(offset: contentHeight)
-    }
-    
-    private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let screenWidth = UIScreen.main.bounds.width
-        let verticalInset: CGFloat = 4
-        let horizontalInset: CGFloat = 12
-        let horizontalSpacing: CGFloat = horizontalInset*2
-        let itemSpacing: CGFloat = layout.minimumInteritemSpacing * 2
-        let itemWidth: CGFloat = (screenWidth - itemSpacing - horizontalSpacing) / 3
-        let itemHeight: CGFloat = itemWidth * 1.8
-        layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
-        layout.sectionInset = .init(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 4
-        return layout
     }
 }

@@ -8,10 +8,11 @@
 import UIKit
 
 final class SearchView: BaseView {
-
+    
+    // MARK: - UI Components
     let searchBar = UISearchBar()
     let searchBarBackgroundView = UIView()
-
+    
     let searchByFilterHeader = SectionHeaderView()
     let searchByFilterStackView = UIStackView()
     var filterButtons: [SearchBadgeButton] = []
@@ -23,6 +24,7 @@ final class SearchView: BaseView {
     let tableView = UITableView()
     let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
+    // MARK: - Hierarchy
     override func configureHierarchy() {
         addSubview(searchBarBackgroundView)
         searchBarBackgroundView.addSubview(searchBar)
@@ -36,6 +38,7 @@ final class SearchView: BaseView {
         addSubview(tableView)
     }
     
+    // MARK: - Layout
     override func configureLayout() {
         searchBarBackgroundView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -76,46 +79,51 @@ final class SearchView: BaseView {
             make.height.equalTo(32)
         }
         makeAuthorButtons()
-
+        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(searchBarBackgroundView.snp.bottom).offset(12)
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
     
+    // MARK: - Styling
     override func configureView() {
         super.configureView()
-
+        
         searchBarBackgroundView.backgroundColor = .bgGray
         searchBarBackgroundView.layer.cornerRadius = 4
-
+        
         searchBar.tintColor = .black
         searchBar.placeholder = Resources.Keys.placeholder.localized
         searchBar.backgroundColor = .clear
         searchBar.searchTextField.font = .pretendardBold(ofSize: 16)
         searchBar.searchTextField.backgroundColor = .clear
         searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-
+        
         searchByFilterHeader.titleLabel.text = Resources.Keys.searchByFilter.localized
-
+        
         searchByFilterStackView.axis = .horizontal
         searchByFilterStackView.spacing = 8
         
         searchByAuthorHeader.titleLabel.text = Resources.Keys.searchByAuthor.localized
- 
+        
         searchByAuthorStackView.axis = .horizontal
         searchByAuthorStackView.spacing = 8
-
+        
         tableView.isHidden = true
         tableView.rowHeight = 140
         tableView.keyboardDismissMode = .onDrag
         tableView.register(UINib(nibName: BasicTableViewCell.identifier, bundle: nil),
                            forCellReuseIdentifier: BasicTableViewCell.identifier)
-
+        
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.color = .lightGray
         tableView.tableFooterView = loadingIndicator
     }
+}
+
+// MARK: - Functions
+extension SearchView {
     
     private func makeFilterButtons() {
         let filterList = [
@@ -132,7 +140,7 @@ final class SearchView: BaseView {
 
     private func makeAuthorButtons() {
         let authorList = [
-            "자까", "순끼", "이말년", "조석", "박태준", "모죠"
+            "자까", "순끼", "이말년", "조석", "박태준", "모죠" // 외부에서 데이터 받아오는 것을 가정
         ]
         for author in authorList {
             let button = SearchBadgeButton()

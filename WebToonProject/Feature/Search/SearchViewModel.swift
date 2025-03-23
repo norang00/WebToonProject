@@ -42,7 +42,6 @@ final class SearchViewModel: BaseViewModel<Webtoon, SearchViewModel.Input, Searc
             .bind(with: self) { owner, keyword in
                 owner.currentKeyword = keyword
                 owner.resetPagination()
-                
                 owner.currentSearchOption = nil
                 owner.resultList.accept(Array(repeating: Webtoon.shimmer, count: 5))
                 owner.callRequestToNetworkManager()

@@ -62,8 +62,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.tabBar.items![1].image = UIImage(systemName: Resources.SystemImage.search.rawValue)
         tabBarController.tabBar.items![2].title = Resources.Keys.like.localized
         tabBarController.tabBar.items![2].image = UIImage(systemName: Resources.SystemImage.like.rawValue)
-        
-        // [Temp]
         tabBarController.selectedIndex = 0
         
         return tabBarController

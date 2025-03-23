@@ -14,24 +14,21 @@ import Toast
 
 final class ImageViewerViewController: BaseViewController {
     
-    let realm = try! Realm()
-    var likedList: Results<LikedWebtoon>!
-    
     enum ViewerScrollDirection {
         case horizontal
         case vertical
     }
-    
-    private var scrollDirection: ViewerScrollDirection = .horizontal // init
-    
+
     var webtoon: Webtoon?
+
+    private let realm = try! Realm()
+    private var likedList: Results<LikedWebtoon>?
+    private var scrollDirection: ViewerScrollDirection = .horizontal // init
     
     private let imageViewerView = ImageViewerView()
     private let imageViewerViewModel = ImageViewerViewModel()
     
     private let viewDidLoadTrigger = PublishRelay<Void>()
-    
-    private let disposeBag = DisposeBag()
     
     override func loadView() {
         view = imageViewerView
@@ -39,21 +36,18 @@ final class ImageViewerViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(realm.configuration.fileURL)
-        likedList = realm.objects(LikedWebtoon.self)
-        dump(likedList)
-        
+        toggleScreen()
         guard let webtoon = webtoon else { return }
+        likedList = realm.objects(LikedWebtoon.self)
         let isLiked = checkIsLiked(webtoon)
-            imageViewerView.likeButton.setImage(
-                isLiked ? Resources.SystemImage.like.image : Resources.SystemImage.unlike.image,
-                for: .normal
-            )
         
         imageViewerViewModel.imageKeyword = webtoon.title
         imageViewerView.titleLabel.text = webtoon.title
         imageViewerView.collectionView.delegate = self
+        imageViewerView.likeButton.setImage(
+            isLiked ? Resources.SystemImage.like.image : Resources.SystemImage.unlike.image,
+            for: .normal
+        )
         
         bind()
         viewDidLoadTrigger.accept(())
@@ -83,7 +77,7 @@ final class ImageViewerViewController: BaseViewController {
             .drive(imageViewerView.collectionView.rx.items(
                 cellIdentifier: ImageViewerCollectionViewCell.identifier,
                 cellType: ImageViewerCollectionViewCell.self)) { index, item, cell in
-                    cell.configureData(item) //[TODO] like 반영
+                    cell.configureData(item)
                 }
                 .disposed(by: disposeBag)
         
@@ -102,11 +96,8 @@ final class ImageViewerViewController: BaseViewController {
         imageViewerView.likeButton.rx.tap
             .bind(with: self) { owner, _ in
                 guard let webtoon = owner.webtoon else { return }
-                let resultRelay = BehaviorRelay(value: false)
                 var isLiked = owner.checkIsLiked(webtoon)
-                print("isLiked", isLiked)
                 isLiked.toggle()
-                print("isLiked", isLiked)
                 
                 do {
                     try owner.realm.write {
@@ -184,7 +175,8 @@ extension ImageViewerViewController {
 extension ImageViewerViewController {
     
     private func checkIsLiked(_ webtoon: Webtoon) -> Bool {
-        let result = likedList.where { $0.id == webtoon.id }
+        let result = likedList?.where { $0.id == webtoon.id }
+        guard let result = result else { return false }
         return !result.isEmpty
     }
 }
@@ -222,7 +214,7 @@ extension ImageViewerViewController: UICollectionViewDelegateFlowLayout {
         scrollDirection = (scrollDirection == .horizontal) ? .vertical : .horizontal
         imageViewerView.viewerToggleButton.setImage((scrollDirection == .horizontal) ?
                                                     Resources.SystemImage.upDownArrow.image :
-                                                        Resources.SystemImage.leftRightArrow.image,
+                                                    Resources.SystemImage.leftRightArrow.image,
                                                     for: .normal)
         
         let currentIndex = imageViewerView.collectionView.indexPathsForVisibleItems.first?.item ?? 0

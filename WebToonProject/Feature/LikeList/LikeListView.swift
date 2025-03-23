@@ -9,16 +9,19 @@ import UIKit
 
 final class LikeListView: BaseView {
     
+    // MARK: - UI Components
     let countLabel = UILabel()
     let sortButton = UIButton(type: .system)
     let tableView = UITableView()
     
+    // MARK: - Hierarchy
     override func configureHierarchy() {
         addSubview(countLabel)
         addSubview(sortButton)
         addSubview(tableView)
     }
     
+    // MARK: - Layout
     override func configureLayout() {
         countLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(8)
@@ -36,18 +39,21 @@ final class LikeListView: BaseView {
         }
     }
     
+    // MARK: - Styling
     override func configureView() {
         super.configureView()
         
         countLabel.font = .pretendardBold(ofSize: 14)
-        countLabel.textColor = .black
         countLabel.text = Resources.Keys.howMany.localized
+        countLabel.textColor = .black
         
-        sortButton.setTitle(Resources.Keys.sortByReg.localized, for: .normal)
         sortButton.titleLabel?.font = .pretendardRegular(ofSize: 14)
+        sortButton.setTitle(Resources.Keys.sortByReg.localized, for: .normal)
         
-        tableView.register(UINib(nibName: BasicTableViewCell.identifier, bundle: nil),
-                           forCellReuseIdentifier: BasicTableViewCell.identifier)
         tableView.rowHeight = 140
+        tableView.register(
+            UINib(nibName: BasicTableViewCell.identifier, bundle: nil),
+            forCellReuseIdentifier: BasicTableViewCell.identifier
+        )
     }
 }

@@ -56,7 +56,6 @@ final class ImageViewerViewModel: BaseViewModel<Image,
             case .success(let data):
                 self.resultToShow = data.items
                 self.resultList.accept(resultToShow)
-                dump(data.items.first!)
             case .failure(let error):
                 self.errorMessage.accept(error)
             }

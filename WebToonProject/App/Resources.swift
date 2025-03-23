@@ -8,6 +8,7 @@
 import UIKit
 
 enum Resources {
+
     enum SystemImage: String {
         case back = "arrow.left"
         case search = "magnifyingglass"

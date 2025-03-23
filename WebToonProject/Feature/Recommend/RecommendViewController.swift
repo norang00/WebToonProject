@@ -10,13 +10,11 @@ import RxSwift
 import RxCocoa
 
 final class RecommendViewController: BaseViewController {
-
+    
     private let recommendView = RecommendView()
     private let recommendViewModel = RecommendViewModel()
     
     private let viewDidLoadTrigger = PublishRelay<Void>()
-    
-    private let disposeBag = DisposeBag()
     
     override func loadView() {
         view = recommendView
@@ -49,7 +47,7 @@ final class RecommendViewController: BaseViewController {
                     }
                 }
                 .disposed(by: disposeBag)
-
+        
         output.bannerImages
             .drive(onNext: { [weak self] images in
                 self?.recommendView.bannerView.setImages(images)
@@ -62,12 +60,11 @@ final class RecommendViewController: BaseViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-
+        
         recommendView.collectionView.rx.modelSelected(Webtoon.self)
             .bind(with: self) { owner, item in
                 let nextVC = ImageViewerViewController()
                 nextVC.webtoon = item
-                print("recommendView.collectionView.rx.modelSelected", item.title)
                 self.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: disposeBag)

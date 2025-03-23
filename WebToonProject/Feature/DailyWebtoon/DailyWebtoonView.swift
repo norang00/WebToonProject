@@ -9,43 +9,11 @@ import UIKit
 import SnapKit
 
 final class DailyWebtoonView: BaseView {
+    
+    // MARK: - UI Components
     private(set) var weekdayButtons: [(day: Resources.WeekDay, button: TabButton)] = []
-    let stackView = UIStackView()
+    private let stackView = UIStackView()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
-    
-    override func configureHierarchy() {
-        Resources.WeekDay.allCases.forEach { day in
-            let button = TabButton(title: day.localized, frame: .zero)
-            weekdayButtons.append((day, button))
-            stackView.addArrangedSubview(button)
-        }
-        
-        addSubview(stackView)
-        addSubview(collectionView)
-    }
-    
-    override func configureLayout() {
-        stackView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(44)
-        }
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom)
-            make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
-        }
-    }
-    
-    override func configureView() {
-        super.configureView()
-        
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0
-        
-        collectionView.keyboardDismissMode = .onDrag
-        collectionView.register(UINib(nibName: BasicCollectionViewCell.identifier, bundle: nil),
-                                forCellWithReuseIdentifier: BasicCollectionViewCell.identifier)
-    }
     
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -63,13 +31,56 @@ final class DailyWebtoonView: BaseView {
         return layout
     }
     
+    // MARK: - Hierarchy
+    override func configureHierarchy() {
+        addSubview(stackView)
+        addSubview(collectionView)
+        
+        Resources.WeekDay.allCases.forEach { day in
+            let button = TabButton(title: day.localized, frame: .zero)
+            weekdayButtons.append((day, button))
+            stackView.addArrangedSubview(button)
+        }
+    }
+    
+    // MARK: - Layout
+    override func configureLayout() {
+        stackView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(44)
+        }
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
+        }
+    }
+    
+    // MARK: - Styling
+    override func configureView() {
+        super.configureView()
+        
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        
+        collectionView.keyboardDismissMode = .onDrag
+        collectionView.register(
+            UINib(nibName: BasicCollectionViewCell.identifier, bundle: nil),
+            forCellWithReuseIdentifier: BasicCollectionViewCell.identifier
+        )
+    }
+}
+
+// MARK: - Functions
+extension DailyWebtoonView {
+    
     func selectButton(for day: Resources.WeekDay) {
         weekdayButtons.forEach { item in
             item.button.isSelected = (item.day == day)
         }
-        collectionView.setContentOffset(
-            CGPoint(x: 0, y: -collectionView.contentInset.top),
-            animated: true
-        )
+//        collectionView.setContentOffset(
+//            CGPoint(x: 0, y: -collectionView.contentInset.top),
+//            animated: true
+//        )
     }
 }
