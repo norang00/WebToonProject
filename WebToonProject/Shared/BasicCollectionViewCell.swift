@@ -50,6 +50,7 @@ final class BasicCollectionViewCell: UICollectionViewCell {
         
         guard let thumbnailString = data.thumbnail.first,
               let url = URL(string: thumbnailString) else { return }
+        
         let modifier = AnyModifier { request in
             var request = request
             request.setValue("https://comic.naver.com",

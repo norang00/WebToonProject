@@ -5,7 +5,7 @@
 //  Created by Kyuhee hong on 3/19/25.
 //
 
-import Foundation
+import UIKit
 
 enum Resources {
     enum SystemImage: String {
@@ -15,15 +15,25 @@ enum Resources {
         case like = "heart.fill"
         case unlike = "heart"
         case chevronRight = "chevron.right"
+        case upDownArrow = "arrow.up.and.down.square"
+        case leftRightArrow = "arrow.left.and.right.square"
+        
+        var image: UIImage? {
+            UIImage(systemName: self.rawValue)
+        }
     }
     
     enum CustomImage: String {
-        case basic = "basicImage"
+        case placeholder = "basicImage"
         case isEnd = "isEnd"
         case isFree = "isFree"
         case isUpdated = "isUpdated"
         case starGreen = "star_green"
         case starGray = "star_gray"
+        
+        var image: UIImage? {
+            UIImage(named: self.rawValue)
+        }
     }
     
     // Keys for localization

@@ -9,18 +9,18 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class ImageViewerViewModel: BaseViewModel<URL,
+final class ImageViewerViewModel: BaseViewModel<Image,
                                   ImageViewerViewModel.Input,
                                   ImageViewerViewModel.Output> {
     
-    var imageKeyword: String = "자까" // temp
+    var imageKeyword: String = ""
     
     struct Input {
         let viewDidLoadTrigger: PublishRelay<Void>
     }
     
     struct Output {
-        let resultList: Driver<[URL]>
+        let resultList: Driver<[Image]>
         let errorMessage: PublishRelay<CustomError>
     }
     
@@ -54,11 +54,9 @@ final class ImageViewerViewModel: BaseViewModel<URL,
             
             switch response {
             case .success(let data):
-                let imageURLs = data.items.compactMap {
-                    URL(string: $0.link)
-                }
-                dump(imageURLs)
-                self.resultList.accept(imageURLs)
+                self.resultToShow = data.items
+                self.resultList.accept(resultToShow)
+                dump(data.items.first!)
             case .failure(let error):
                 self.errorMessage.accept(error)
             }
