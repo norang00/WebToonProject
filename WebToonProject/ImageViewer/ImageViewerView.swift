@@ -28,8 +28,6 @@ final class ImageViewerView: BaseView {
     let bottomBarView = UIView()
     let likeButton = UIButton()
     let viewerToggleButton = UIButton()
-    let nextButton = UIButton()
-    let previousButton = UIButton()
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -60,8 +58,6 @@ final class ImageViewerView: BaseView {
         
         bottomBarView.addSubview(likeButton)
         bottomBarView.addSubview(viewerToggleButton)
-        bottomBarView.addSubview(previousButton)
-        bottomBarView.addSubview(nextButton)
     }
     
     // MARK: - Layout
@@ -93,56 +89,31 @@ final class ImageViewerView: BaseView {
         bottomBarView.snp.makeConstraints { make in
             make.bottom.equalTo(safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(50)
+            make.height.equalTo(60)
         }
         
-        previousButton.snp.makeConstraints { make in
+        likeButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
         }
         
-        nextButton.snp.makeConstraints { make in
+        viewerToggleButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
-        }
-        
-        likeButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.centerX.equalToSuperview().offset(-40)
-        }
-        
-        viewerToggleButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(likeButton.snp.trailing).offset(10)
         }
     }
     
     // MARK: - Styling
     override func configureView() {
-        print(#function)
-        
         backgroundColor = .black
+        
         topBarView.backgroundColor = .black
-        bottomBarView.backgroundColor = .black
-        
-        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        shareButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-        
+        backButton.setImage(Resources.SystemImage.chevronLeft.image, for: .normal)
         titleLabel.text = "제목"
-        titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.font = .pretendardBold(ofSize: 16)
         titleLabel.textColor = .white
-        
-        previousButton.setTitle("◀︎", for: .normal)
-        nextButton.setTitle("▶︎", for: .normal)
-        likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-        
-        viewerToggleButton.setImage(Resources.SystemImage.upDownArrow.image, for: .normal)
-        
-        [previousButton, nextButton, likeButton, viewerToggleButton].forEach {
-            $0.setTitleColor(.white, for: .normal)
-            $0.tintColor = .white
-        }
-        
+        shareButton.setImage(Resources.SystemImage.share.image, for: .normal)
+                
         collectionView.isPagingEnabled = true
         collectionView.backgroundColor = .black
         collectionView.showsVerticalScrollIndicator = false
@@ -151,12 +122,13 @@ final class ImageViewerView: BaseView {
             UINib(nibName: ImageViewerCollectionViewCell.identifier, bundle: nil),
             forCellWithReuseIdentifier: ImageViewerCollectionViewCell.identifier
         )
+        
+        bottomBarView.backgroundColor = .black
+        [likeButton, viewerToggleButton].forEach {
+            $0.setTitleColor(.white, for: .normal)
+            $0.tintColor = .white
+        }
+        likeButton.setImage(Resources.SystemImage.unlike.image, for: .normal)
+        viewerToggleButton.setImage(Resources.SystemImage.upDownArrow.image, for: .normal)
     }
-    
-    func toggleScreen() {
-        topBarView.isHidden.toggle()
-        bottomBarView.isHidden.toggle()
-    }
-    
-   
 }

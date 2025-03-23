@@ -11,15 +11,18 @@ enum Resources {
     enum SystemImage: String {
         case back = "arrow.left"
         case search = "magnifyingglass"
+        case share = "square.and.arrow.up"
         case recommend = "star"
         case like = "heart.fill"
         case unlike = "heart"
         case chevronRight = "chevron.right"
+        case chevronLeft = "chevron.left"
         case upDownArrow = "arrow.up.and.down.square"
         case leftRightArrow = "arrow.left.and.right.square"
         
         var image: UIImage? {
-            UIImage(systemName: self.rawValue)
+            let buttonConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
+            return UIImage(systemName: self.rawValue)?.withConfiguration(buttonConfig)
         }
     }
     

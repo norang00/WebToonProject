@@ -34,10 +34,9 @@ final class ImageViewerViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ImageViewerViewController", #function, imageKeyword)
         imageViewerViewModel.imageKeyword = self.imageKeyword
-        imageViewerView.titleLabel.text = imageKeyword
         imageViewerView.collectionView.delegate = self
+        imageViewerView.titleLabel.text = imageKeyword
         
         bind()
         viewDidLoadTrigger.accept(())
@@ -70,13 +69,16 @@ final class ImageViewerViewController: BaseViewController {
                     cell.configureData(item)
                 }
                 .disposed(by: disposeBag)
-
-//        imageViewerView.collectionView.rx.setDelegate(self)
-//            .disposed(by: disposeBag)
         
         imageViewerView.backButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        imageViewerView.shareButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.shareCurrentImage()
             }
             .disposed(by: disposeBag)
         
@@ -88,12 +90,35 @@ final class ImageViewerViewController: BaseViewController {
         
         imageViewerView.rx.tapGesture()
             .bind(with: self) { owner, _ in
-                owner.imageViewerView.toggleScreen()
+                owner.toggleScreen()
             }
             .disposed(by: disposeBag)
     }
 }
 
+// MARK: - Share Image
+extension ImageViewerViewController {
+    
+    private func shareCurrentImage() {
+        let visibleRect = CGRect(origin: imageViewerView.collectionView.contentOffset,
+                                 size: imageViewerView.collectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+
+        guard let indexPath = imageViewerView.collectionView.indexPathForItem(at: visiblePoint),
+              let cell = imageViewerView.collectionView.cellForItem(at: indexPath) as? ImageViewerCollectionViewCell,
+              let image = cell.cutImageView.image else {
+            print("image not found")
+            return
+        }
+
+        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view // iPad 대응
+
+        self.present(activityVC, animated: true)
+    }
+}
+
+// MARK: - Layout Toggle
 extension ImageViewerViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
@@ -117,24 +142,23 @@ extension ImageViewerViewController: UICollectionViewDelegateFlowLayout {
         }
     }
     
+    func toggleScreen() {
+        imageViewerView.topBarView.isHidden.toggle()
+        imageViewerView.bottomBarView.isHidden.toggle()
+    }
+
     func toggleScrollDirection() {
-        print(#function)
-        
-        let currentIndex = imageViewerView.collectionView.indexPathsForVisibleItems.first?.item ?? 0
-        
         scrollDirection = (scrollDirection == .horizontal) ? .vertical : .horizontal
-        
         imageViewerView.viewerToggleButton.setImage((scrollDirection == .horizontal) ?
-                                    Resources.SystemImage.upDownArrow.image :
-                                    Resources.SystemImage.leftRightArrow.image,
-                                    for: .normal)
-        
+                                                    Resources.SystemImage.upDownArrow.image :
+                                                    Resources.SystemImage.leftRightArrow.image,
+                                                    for: .normal)
+
+        let currentIndex = imageViewerView.collectionView.indexPathsForVisibleItems.first?.item ?? 0
         guard let layout = imageViewerView.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        
+        layout.invalidateLayout()
         layout.scrollDirection = (scrollDirection == .horizontal) ? .horizontal : .vertical
         imageViewerView.collectionView.isPagingEnabled = (scrollDirection == .horizontal)
-        
-        layout.invalidateLayout()
         imageViewerView.collectionView.setCollectionViewLayout(layout, animated: false)
         
         let targetIndex = IndexPath(item: currentIndex, section: 0)
@@ -143,15 +167,5 @@ extension ImageViewerViewController: UICollectionViewDelegateFlowLayout {
         }
         
         imageViewerView.collectionView.delegate = self
-
-    }
-}
-
-
-extension Collection {
-
-    /// Returns the element at the specified index if it is within bounds, otherwise nil.
-    subscript (safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
     }
 }
