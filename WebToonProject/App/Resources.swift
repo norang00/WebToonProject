@@ -8,7 +8,7 @@
 import UIKit
 
 enum Resources {
-
+    
     enum SystemImage: String {
         case back = "arrow.left"
         case search = "magnifyingglass"
@@ -47,6 +47,7 @@ enum Resources {
         case search
         case like
         case daily
+        case confirm
         
         //button title
         case dailyWebtoon
@@ -101,19 +102,6 @@ enum Resources {
                 7: .sat
             ]
             return weekdayMap[weekdayIndex]
-        }
-    }
-    
-    enum AlertType: String {
-        case screenShot
-        case noInternet
-        
-        var title: String {
-            NSLocalizedString("\(rawValue)Title", comment: "")
-        }
-
-        var message: String {
-            NSLocalizedString("\(rawValue)Message", comment: "")
         }
     }
 }

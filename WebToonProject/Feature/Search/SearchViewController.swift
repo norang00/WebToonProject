@@ -112,6 +112,13 @@ final class SearchViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.errorMessage
+            .bind(with: self) { owner, customError in
+                owner.showAlert(title: customError.title,
+                                message: customError.message)
+            }
+            .disposed(by: disposeBag)
+        
         searchView.tableView.rx.modelSelected(Webtoon.self)
             .bind(with: self) { owner, item in
                 let nextVC = ImageViewerViewController()

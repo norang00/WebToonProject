@@ -28,6 +28,11 @@ final class RecommendViewController: BaseViewController {
         viewDidLoadTrigger.accept(())
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewDidLoadTrigger.accept(())
+    }
+    
     private func bind() {
         let input = RecommendViewModel.Input(
             viewDidLoadTrigger: viewDidLoadTrigger,
@@ -59,6 +64,13 @@ final class RecommendViewController: BaseViewController {
             .drive(onNext: { [weak self] images in
                 self?.recommendView.bannerView.setImages(images)
             })
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .bind(with: self) { owner, customError in
+                owner.showAlert(title: customError.title,
+                                message: customError.message)
+            }
             .disposed(by: disposeBag)
         
         recommendView.dailyButton.rx.tap
