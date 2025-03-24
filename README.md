@@ -38,7 +38,7 @@ Kingfisher, SnapKit, Toast-Swift, Realm 등 외부 라이브러리를 활용하�
 
 - Shimmer 뷰를 통한 로딩 UI
   - Network 통신 대기 중 로딩 상태 표현
-  - 
+  
 - **다국어 지원**  
   - 한국어 / 영어 / 일본어 로컬라이징  
   - NSLocalizedString 및 enum 기반 리소스 처리  
@@ -81,7 +81,7 @@ Kingfisher, SnapKit, Toast-Swift, Realm 등 외부 라이브러리를 활용하�
 - 정렬 기능 (제목순, 등록순)
 - 선택한 항목 클릭 → 감상화면 이동
 
----
+<!-- ---
 
 ## 🛠 트러블슈팅 & 인사이트
 
@@ -98,10 +98,12 @@ Kingfisher, SnapKit, Toast-Swift, Realm 등 외부 라이브러리를 활용하�
 → `collectionViewContentSize.height`를 활용하여 레이아웃 업데이트 로직 별도 작성
 
 ---
+-->
 
 ## 📦 향후 개선 사항
 
 - Network 최적화
+- 다운로드 기능
 
 ---
 
