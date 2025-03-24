@@ -10,7 +10,9 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-final class LikeListViewModel: BaseViewModel<LikedWebtoon, LikeListViewModel.Input, LikeListViewModel.Output> {
+final class LikeListViewModel: BaseViewModel<LikedWebtoon,
+                               LikeListViewModel.Input,
+                               LikeListViewModel.Output> {
 
     enum SortType {
         case title, regDate
@@ -32,7 +34,7 @@ final class LikeListViewModel: BaseViewModel<LikedWebtoon, LikeListViewModel.Inp
     private var currentSort: SortType = .regDate
 
     private let resultRelay = BehaviorRelay<[Webtoon]>(value: [])
-    private let sortTitleRelay = BehaviorRelay<String>(value: "등록순")
+    private let sortTitleRelay = BehaviorRelay<String>(value: "")
 
     private var currentSortTitle: String {
         currentSort == .title ? Resources.Keys.sortByTitle.localized : Resources.Keys.sortByReg.localized
@@ -43,6 +45,7 @@ final class LikeListViewModel: BaseViewModel<LikedWebtoon, LikeListViewModel.Inp
 
         input.viewWillAppear
             .bind(with: self) { owner, _ in
+                owner.sortTitleRelay.accept(owner.currentSortTitle)
                 owner.fetchSorted()
             }
             .disposed(by: disposeBag)

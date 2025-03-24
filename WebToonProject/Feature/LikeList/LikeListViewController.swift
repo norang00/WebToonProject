@@ -55,6 +55,7 @@ final class LikeListViewController: BaseViewController {
                 cellIdentifier: BasicTableViewCell.identifier,
                 cellType: BasicTableViewCell.self)) { index, item, cell in
                     cell.configureData(item)
+                    cell.hideRatingInfo()
                 }
             .disposed(by: disposeBag)
 

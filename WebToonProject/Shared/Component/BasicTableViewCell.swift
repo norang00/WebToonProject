@@ -103,4 +103,10 @@ class BasicTableViewCell: UITableViewCell {
         shimmerViews.forEach { $0.stopShimmering() }
         shimmerViews.removeAll()
     }
+    
+    func hideRatingInfo() {
+        infoImageView.isHidden = true
+        ratingLabel.isHidden = true
+        starImageViews.forEach { $0.isHidden = true }
+    }
 }
