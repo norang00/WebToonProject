@@ -44,11 +44,9 @@ final class LikeListView: BaseView {
         super.configureView()
         
         countLabel.font = .pretendardBold(ofSize: 14)
-        countLabel.text = Resources.Keys.howMany.localized
         countLabel.textColor = .black
         
         sortButton.titleLabel?.font = .pretendardRegular(ofSize: 14)
-        sortButton.setTitle(Resources.Keys.sortByReg.localized, for: .normal)
         
         tableView.rowHeight = 140
         tableView.register(
