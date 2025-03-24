@@ -31,7 +31,7 @@ final class RecommendViewModel: BaseViewModel<Webtoon,
         input.viewDidLoadTrigger
             .bind(with: self) { owner, _ in
                 let shimmer = Webtoon.shimmer
-                owner.resultList.accept(Array(repeating: shimmer, count: 6))
+                owner.resultList.accept(Array(repeating: shimmer, count: 12))
                 owner.callRequestToNetworkManager()
             }
             .disposed(by: disposeBag)
