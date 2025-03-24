@@ -14,7 +14,7 @@ Kingfisher, SnapKit, Toast-Swift, Realm 등 외부 라이브러리를 활용하�
 
 ## 🔧 Tech Stack
 
-- **UIKit**
+- **UIKit / Storyboard(Xib)**
 - **RxSwift / RxCocoa**: MVVM 패턴 구성 및 Input/Outu 패턴, 반응형 바인딩 처리
 - **SnapKit**: 레이아웃 제약 조건 설정
 - **Kingfisher**: 이미지 다운로드 및 캐싱
