@@ -87,5 +87,11 @@ final class RecommendViewController: BaseViewController {
                 self.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        recommendView.collectionView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.recommendView.collectionView.deselectItem(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }

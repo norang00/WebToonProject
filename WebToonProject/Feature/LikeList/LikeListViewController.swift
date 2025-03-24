@@ -70,5 +70,11 @@ final class LikeListViewController: BaseViewController {
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        likeListView.tableView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.likeListView.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }

@@ -85,6 +85,12 @@ final class DailyWebtoonViewController: BaseViewController {
                 self.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        dailyWebtoonView.collectionView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.dailyWebtoonView.collectionView.deselectItem(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
     private func setToday() {

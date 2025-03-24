@@ -37,10 +37,10 @@ final class ImageViewerViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         toggleScreen()
+        
         guard let webtoon = webtoon else { return }
         likedList = realm.objects(LikedWebtoon.self)
         let isLiked = checkIsLiked(webtoon)
-        
         imageViewerViewModel.imageKeyword = webtoon.title
         imageViewerView.titleLabel.text = webtoon.title
         imageViewerView.collectionView.delegate = self
@@ -50,7 +50,7 @@ final class ImageViewerViewController: BaseViewController {
         )
         
         bind()
-        viewDidLoadTrigger.accept(())
+        
         observeScreenshotNotification()
     }
     
@@ -63,6 +63,11 @@ final class ImageViewerViewController: BaseViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: true)
         tabBarController?.tabBar.isHidden = true
+        
+        performNetworkActionWithConfirmationIfNeeded { [weak self] in
+            print(#function)
+            self?.viewDidLoadTrigger.accept(())
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
