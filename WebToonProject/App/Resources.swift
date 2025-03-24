@@ -103,4 +103,17 @@ enum Resources {
             return weekdayMap[weekdayIndex]
         }
     }
+    
+    enum AlertType: String {
+        case screenShot
+        case noInternet
+        
+        var title: String {
+            NSLocalizedString("\(rawValue)Title", comment: "")
+        }
+
+        var message: String {
+            NSLocalizedString("\(rawValue)Message", comment: "")
+        }
+    }
 }

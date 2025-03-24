@@ -49,6 +49,7 @@ final class RecommendViewController: BaseViewController {
                 .disposed(by: disposeBag)
         
         output.resultList
+            .delay(.milliseconds(100))
             .drive(with: self) { owner, _ in
                 owner.recommendView.updateCollectionViewHeight()
             }
