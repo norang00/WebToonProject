@@ -29,23 +29,6 @@ final class ImageViewerView: BaseView {
         return layout
     }
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        
-//        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-//        
-//        let screenWidth = UIScreen.main.bounds.width
-//        let totalHeight = bounds.height
-//        
-//        let topBarHeight: CGFloat = topBarView.frame.height
-//        let bottomBarHeight: CGFloat = bottomBarView.frame.height
-//        
-//        let itemHeight = totalHeight - topBarHeight - bottomBarHeight
-//        
-//        layout.itemSize = CGSize(width: screenWidth, height: itemHeight)
-//        layout.invalidateLayout()
-//    }
-    
     // MARK: - Hierarchy
     override func configureHierarchy() {
         addSubview(collectionView)
@@ -63,33 +46,34 @@ final class ImageViewerView: BaseView {
     // MARK: - Layout
     override func configureLayout() {
         collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
         
         topBarView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
+            make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(44)
+            make.height.equalTo(100)
         }
         
         backButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
-            make.centerY.equalToSuperview()
+            make.bottom.equalToSuperview().inset(12)
         }
         
         shareButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
-            make.centerY.equalToSuperview()
+            make.bottom.equalToSuperview().inset(12)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(12)
         }
         
         bottomBarView.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(60)
+            make.height.equalTo(80)
         }
         
         likeButton.snp.makeConstraints { make in
