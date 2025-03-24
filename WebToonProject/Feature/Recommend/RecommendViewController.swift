@@ -48,6 +48,12 @@ final class RecommendViewController: BaseViewController {
                 }
                 .disposed(by: disposeBag)
         
+        output.resultList
+            .drive(with: self) { owner, _ in
+                owner.recommendView.updateCollectionViewHeight()
+            }
+            .disposed(by: disposeBag)
+
         output.bannerImages
             .drive(onNext: { [weak self] images in
                 self?.recommendView.bannerView.setImages(images)

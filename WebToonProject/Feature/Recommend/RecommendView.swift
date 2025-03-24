@@ -38,13 +38,6 @@ final class RecommendView: BaseView {
         
         return layout
     }
-        
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        collectionView.layoutIfNeeded()
-        let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
-        collectionViewHeightConstraint?.update(offset: contentHeight)
-    }
 
     // MARK: - Hierarchy
     override func configureHierarchy() {
@@ -108,5 +101,11 @@ final class RecommendView: BaseView {
         collectionView.register(UINib(nibName: BasicCollectionViewCell.identifier, bundle: nil),
                                               forCellWithReuseIdentifier: BasicCollectionViewCell.identifier)
         collectionView.isScrollEnabled = false
+    }
+    
+    func updateCollectionViewHeight() {
+        collectionView.layoutIfNeeded()
+        let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
+        collectionViewHeightConstraint?.update(offset: contentHeight)
     }
 }
