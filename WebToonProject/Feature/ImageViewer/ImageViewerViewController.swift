@@ -51,6 +51,11 @@ final class ImageViewerViewController: BaseViewController {
         
         bind()
         viewDidLoadTrigger.accept(())
+        observeScreenshotNotification()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -169,6 +174,25 @@ extension ImageViewerViewController {
         
         self.present(activityVC, animated: true)
     }
+}
+
+// MARK: - ScreenShot Alert
+extension ImageViewerViewController {
+    
+    private func observeScreenshotNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleScreenshot),
+            name: UIApplication.userDidTakeScreenshotNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func handleScreenshot() {
+        self.showAlert(title: Resources.AlertType.screenShot.title,
+                       message: Resources.AlertType.screenShot.message)
+    }
+
 }
 
 // MARK: - Like
