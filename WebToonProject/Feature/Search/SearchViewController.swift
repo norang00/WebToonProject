@@ -75,7 +75,6 @@ final class SearchViewController: BaseViewController {
         let output = searchViewModel.transform(input)
 
         searchView.searchBar.rx.text.orEmpty
-            .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, value in
                 owner.searchView.tableView.isHidden = value.isEmpty
@@ -124,6 +123,12 @@ final class SearchViewController: BaseViewController {
                 let nextVC = ImageViewerViewController()
                 nextVC.webtoon = item
                 self.navigationController?.pushViewController(nextVC, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        searchView.tableView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.searchView.tableView.deselectRow(at: indexPath, animated: true)
             }
             .disposed(by: disposeBag)
     }

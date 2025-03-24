@@ -48,6 +48,7 @@ enum Resources {
         case like
         case daily
         case confirm
+        case cancel
         
         //button title
         case dailyWebtoon

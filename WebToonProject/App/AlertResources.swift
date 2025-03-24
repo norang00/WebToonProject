@@ -14,6 +14,7 @@ protocol AlertConvertible {
 
 enum AlertType: String {
     case screenShot
+    case cellularWarning
 }
 
 enum CustomError: String, Error {
