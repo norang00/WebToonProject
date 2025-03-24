@@ -1,6 +1,75 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "askAdminMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理者にお問い合わせください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "관리자에게 문의해주세요."
+          }
+        }
+      }
+    },
+    "askAdminTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please contact to Administrator"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "問題が発生しました。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "문제가 발생했습니다."
+          }
+        }
+      }
+    },
+    "confirm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "confirm"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
+          }
+        }
+      }
+    },
     "daily" : {
       "comment" : "for navigation title",
       "extractionState" : "manual",
@@ -169,7 +238,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please check your connect condition"
+            "value" : "You’re offline. Check your connection."
           }
         },
         "ja" : {
@@ -192,13 +261,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Internet"
+            "value" : "No Internet Connection"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "エラーが発生しました。"
+            "value" : "接続できません。"
           }
         },
         "ko" : {
@@ -307,19 +376,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Caution"
+            "value" : "Screenshot detected"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ご注意"
+            "value" : "スクリーンショット検知"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "주의해주세요"
+            "value" : "스크린샷이 감지되었습니다."
           }
         }
       }
@@ -435,6 +504,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "최근 업데이트"
+          }
+        }
+      }
+    },
+    "serverIssueMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server is unstable. Please Try later."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サーバー側に問題が発生しております。しばらくお待ちの上再度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+          }
+        }
+      }
+    },
+    "serverIssueTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エラー"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "에러 발생"
           }
         }
       }

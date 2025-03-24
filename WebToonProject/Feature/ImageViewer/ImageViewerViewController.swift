@@ -86,6 +86,13 @@ final class ImageViewerViewController: BaseViewController {
                 }
                 .disposed(by: disposeBag)
         
+        output.errorMessage
+            .bind(with: self) { owner, customError in
+                    owner.showAlert(title: customError.title,
+                                    message: customError.message)
+            }
+            .disposed(by: disposeBag)
+        
         imageViewerView.backButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
@@ -189,8 +196,8 @@ extension ImageViewerViewController {
     }
     
     @objc private func handleScreenshot() {
-        self.showAlert(title: Resources.AlertType.screenShot.title,
-                       message: Resources.AlertType.screenShot.message)
+        self.showAlert(title: AlertType.screenShot.title,
+                       message: AlertType.screenShot.message)
     }
 
 }
