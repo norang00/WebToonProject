@@ -108,6 +108,9 @@ Kingfisher, SnapKit, Toast-Swift, Realm 등 외부 라이브러리를 활용하�
 - Network 최적화
 - 다운로드 기능
 
+  - `UICollectionView`의 `prefetchDataSource`로 스크롤 성능 최적화  => 이미지 뷰어 기능으로 확장
+  - realm 저장 시 이미지 통합 저장
+
 ---
 
 ## 🧑‍💻 Author
