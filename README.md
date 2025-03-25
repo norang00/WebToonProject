@@ -14,7 +14,7 @@ Kingfisher, SnapKit, Toast-Swift, Realm 등 외부 라이브러리를 활용하�
 
 ## 🔧 Tech Stack
 
-- **UIKit / Storyboard(Xib)**
+- **UIKit / Storyboard(Xib)**: UICollectionView layout 전환을 통해 뷰어 모드 변경
 - **RxSwift / RxCocoa**: MVVM 패턴 구성 및 Input/Outu 패턴, 반응형 바인딩 처리
 - **SnapKit**: 레이아웃 제약 조건 설정
 - **Kingfisher**: 이미지 다운로드 및 캐싱
@@ -26,7 +26,10 @@ Kingfisher, SnapKit, Toast-Swift, Realm 등 외부 라이브러리를 활용하�
 
 ## ✅ Feature List
 
-### 🔁 공통 기능
+### 🔁 주요 기능
+- **이미지 뷰어 가로/세로 전환**  
+  - 이미지 뷰어 내부 토글 버튼을 통해 가로 컷 진행, 세로 컷 진행 전환  
+  - 세로 모드로 전환시 다양한 이미지 사이즈를 대응하기 위한 개별 Cell 높이 계산을 통해 원활한 감상 뷰어 제공
 
 - **네트워크 에러 처리**  
   - Alamofire의 response 상태코드 + NetworkStatus 기반 커스텀 에러 분기 처리  
@@ -36,7 +39,7 @@ Kingfisher, SnapKit, Toast-Swift, Realm 등 외부 라이브러리를 활용하�
   - `UICollectionView`의 `prefetchDataSource`로 스크롤 성능 최적화  
   - Kingfisher의 캐싱 기능으로 이미지 로드 속도 향상  
 
-- Shimmer 뷰를 통한 로딩 UI
+- **Shimmer 뷰를 통한 로딩 UI** 
   - Network 통신 대기 중 로딩 상태 표현
   
 - **다국어 지원**  
